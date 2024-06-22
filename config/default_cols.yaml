@@ -1,0 +1,23 @@
+#output_dir: data/
+columns:
+  - protocolSection_identificationModule_nctId
+  - protocolSection_designModule_enrollmentInfo_count
+  - protocolSection_statusModule_startDateStruct_date
+  - protocolSection_statusModule_primaryCompletionDateStruct_date
+  - protocolSection_statusModule_completionDateStruct_date
+  - protocolSection_sponsorCollaboratorsModule_responsibleParty_type
+  - protocolSection_sponsorCollaboratorsModule_leadSponsor_class
+  - protocolSection_oversightModule_oversightHasDmc
+  - protocolSection_conditionsModule_conditions
+  - protocolSection_designModule_phases
+  - protocolSection_designModule_designInfo_allocation
+  - protocolSection_designModule_designInfo_interventionModel
+  - protocolSection_designModule_designInfo_primaryPurpose
+  - protocolSection_designModule_designInfo_maskingInfo_masking
+  - protocolSection_armsInterventionsModule_armGroups
+  - protocolSection_armsInterventionsModule_interventions
+  - protocolSection_eligibilityModule_healthyVolunteers
+  - protocolSection_eligibilityModule_stdAges
+  - protocolSection_contactsLocationsModule_locations
+  - protocolSection_outcomesModule_primaryOutcomes
+  - protocolSection_outcomesModule_secondaryOutcomes
