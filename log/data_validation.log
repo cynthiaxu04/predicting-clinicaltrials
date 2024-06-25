@@ -9,3 +9,26 @@
 2024-06-22 09:33:19,913 - Data processing completed.
 2024-06-22 09:44:30,468 - CSV file columns match the YAML schema.
 2024-06-22 09:44:31,205 - Data processing completed.
+2024-06-23 14:12:46,532 - Data processing completed.
+2024-06-23 14:26:27,912 - CSV file columns match the YAML schema.
+2024-06-23 14:26:28,605 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-23 14:27:43,477 - CSV file columns match the YAML schema.
+2024-06-23 14:27:44,176 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-23 14:29:58,910 - Data processing completed.
+2024-06-23 14:45:01,567 - CSV file columns match the YAML schema.
+2024-06-23 14:45:02,277 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-23 14:45:02,294 - Data processing completed.
+2024-06-23 14:55:55,872 - CSV file columns match the YAML schema.
+2024-06-23 14:55:56,595 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-23 14:55:56,864 - Data processing completed.
+2024-06-23 14:56:37,305 - CSV file columns match the YAML schema.
+2024-06-23 14:56:38,016 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-23 14:56:38,029 - Data processing completed.
+2024-06-23 18:14:04,623 - CSV file columns match the YAML schema.
+2024-06-23 18:14:17,532 - CSV file columns match the YAML schema.
+2024-06-23 18:15:00,211 - CSV file columns match the YAML schema.
+2024-06-23 18:15:00,928 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'enroll_count']
+2024-06-23 18:15:00,944 - Data processing completed.
+2024-06-23 18:16:03,569 - CSV file columns match the YAML schema.
+2024-06-23 18:16:04,262 - 85 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'num_locations', 'enroll_count']
+2024-06-23 18:16:04,275 - Data processing completed.

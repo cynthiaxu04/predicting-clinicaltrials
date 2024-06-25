@@ -160,6 +160,10 @@ def find_max_duration(durations):
     max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
     return max_days
 
+# Function to remove specified characters
+def remove_special_chars(col):
+    return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
+
 #########################################################################################################################
 # Code to do actual data processing
 if __name__ == "__main__":
@@ -348,8 +352,14 @@ if __name__ == "__main__":
 
     df['masking'] = df['protocolSection_designModule_designInfo_maskingInfo_masking'].map(mask_map)
 
+    # rename some columns
+    df = df.rename(columns={'protocolSection_designModule_phases': 'phase',
+                             'protocolSection_designModule_enrollmentInfo_count': 'enroll_count',
+                             'protocolSection_eligibilityModule_healthyVolunteers': 'healthy_vol'})
+
     #make a dataframe with just the columns of interest
     cols = [
+        # 'protocolSection_identificationModule_nctId',
         'primary_study_duration_days',
         'study_duration_days',
         'number_of_conditions',
@@ -364,14 +374,17 @@ if __name__ == "__main__":
         # 'protocolSection_sponsorCollaboratorsModule_responsibleParty_type',
         'has_dmc',
         # 'protocolSection_oversightModule_oversightHasDmc',
-        'protocolSection_designModule_phases',
+        # 'protocolSection_designModule_phases',
+        'phase',
         'allocation',
         # 'protocolSection_designModule_designInfo_allocation',
         # 'protocolSection_designModule_designInfo_primaryPurpose',
         # 'protocolSection_designModule_designInfo_maskingInfo_masking',
         'masking',
-        'protocolSection_designModule_enrollmentInfo_count',
-        'protocolSection_eligibilityModule_healthyVolunteers',
+        'enroll_count',
+        'healthy_vol',
+        # 'protocolSection_designModule_enrollmentInfo_count',
+        # 'protocolSection_eligibilityModule_healthyVolunteers',
         'treatment_purpose',
         'diagnostic_purpose',
         'prevention_purpose',
@@ -396,21 +409,41 @@ if __name__ == "__main__":
 
     # handle missing values by filling with the mode to preserve data distribution
     nan_counts = clean_df.isna().sum()
+
+    # cols that are vital for accurate prediction
+    need_cols = [
+        'primary_study_duration_days',
+        'study_duration_days',
+        'num_locations',
+        'enroll_count']
+    
+    # remove rows with NaNs for primary_study_duration_days, study_duration_days, num_locations, enrollmentinfo_count
+    clean_df2 = clean_df.dropna(subset=need_cols).copy()
+    msg = f"{len(clean_df) - len(clean_df2)} rows were dropped due to missing values in one of: {need_cols}"
+    logger.info(msg)
+    print(msg)
+
     nan_cols = nan_counts[nan_counts > 0].index.tolist()
+    # remove mode calculation for 'primary_max_days' and 'secondary_max_days'
+    nan_cols.remove('primary_max_days')
+    nan_cols.remove('secondary_max_days')
     for column in nan_cols:
-        mode_value = clean_df[column].mode()[0]  # Calculate the mode
-        clean_df[column] = clean_df[column].fillna(mode_value)
+        mode_value = clean_df2[column].mode()[0]  # Calculate the mode
+        clean_df2[column] = clean_df2[column].fillna(mode_value)
 
     # one hot encode remaining object columns
-    object_columns = list(clean_df.select_dtypes(include=['object']).columns)
-    encoded_df = pd.get_dummies(clean_df, columns=object_columns).astype(int)
+    object_columns = list(clean_df2.select_dtypes(include=['object']).columns)
+    encoded_df = pd.get_dummies(clean_df2, columns=object_columns)
+
+    # Apply function to all column names
+    encoded_df.columns = encoded_df.columns.map(remove_special_chars)
 
     # now split the data
     train_df, test_df = train_test_split(encoded_df, test_size=0.3, random_state=42, shuffle=True)
 
     # save the data file
-    train_df.to_csv("cleaned_data_train.csv")
-    test_df.to_csv("cleaned_data_test.csv")
+    train_df.to_csv("cleaned_data_train.csv", index=False)
+    test_df.to_csv("cleaned_data_test.csv", index=False)
 
 data_msg = "Data processing completed."
 logger.info(data_msg)
