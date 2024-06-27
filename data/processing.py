@@ -7,6 +7,8 @@ import argparse
 import yaml
 import logging
 from sklearn.model_selection import train_test_split
+from sklearn.cluster import KMeans
+
 
 #########################################################################################################################
 # Set up logging
@@ -99,12 +101,32 @@ def count_loc(value):
   if pd.isna(value):
     return np.nan
   else:
-    new_string = value.split(" ")
+    new_string = value.split(", ")
     counter = 0
     for i in new_string:
       if "facility" in i:
         counter += 1
     return counter
+
+# function to count number of sites
+def trial_loc(value):
+  if pd.isna(value):
+    return np.nan
+  else:
+    new_string = value.split(", ")
+    temp_list = []
+    for i in new_string:
+      if "country" in i:
+        temp_list.append(i)
+    has_us = [i for i in temp_list if "United States" in i]
+
+    if all(i == temp_list[0] for i in temp_list) and has_us:
+        loc = 'USA'
+    elif not has_us:
+        loc = "non-USA"
+    else:
+        loc = "USA & non-USA"
+    return loc
 
 def extract_measures(outcomes):
     # Check if 'outcomes' is iterable (i.e., a list in this context)
@@ -175,6 +197,8 @@ if __name__ == "__main__":
 
     #start data processing
     df = pd.read_csv(args.csv_file)
+    # len of rows
+    rows0 = len(df)
     
     #study duration, float
     df['start_date'] = df['protocolSection_statusModule_startDateStruct_date'].apply(convert_to_datetime)
@@ -182,6 +206,36 @@ if __name__ == "__main__":
     df['completion_date'] = df['protocolSection_statusModule_completionDateStruct_date'].apply(convert_to_datetime)
     df['primary_study_duration_days'] = (df['primary_completion_date'] - df['start_date']).dt.days
     df['study_duration_days'] = (df['completion_date'] - df['start_date']).dt.days
+
+    # cols that are vital for accurate prediction
+    need_cols = [
+        'primary_study_duration_days',
+        'study_duration_days',
+        'protocolSection_designModule_enrollmentInfo_count']
+
+    # remove rows with NaNs for primary_study_duration_days, study_duration_days, num_locations, enrollmentinfo_count
+    df = df.dropna(subset=need_cols).copy()
+    # len of rows after dropping NaNs
+    rows1 = len(df)
+    msg = f"{rows0 - rows1} rows were dropped due to missing values in one of: {need_cols}"
+    logger.info(msg)
+    print(msg)
+
+    # make bins with k means clustering
+    # Desired number of intervals
+    n_intervals = 5
+
+    # Fit K-Means for study_duration_days
+    kmeans_study = KMeans(n_clusters=n_intervals, random_state=42)
+    df['study_cluster'] = kmeans_study.fit_predict(df[['study_duration_days']])
+
+    # Fit K-Means for primary_study_duration_days
+    kmeans_primary_study = KMeans(n_clusters=n_intervals, random_state=42)
+    df['primary_study_cluster'] = kmeans_primary_study.fit_predict(df[['primary_study_duration_days']])
+
+    # Assign intervals based on cluster centroids for each column
+    df['study_duration_bins'] = pd.cut(df['study_duration_days'], bins=np.sort(kmeans_study.cluster_centers_.flatten()))
+    df['primary_study_duration_bins'] = pd.cut(df['primary_study_duration_days'], bins=np.sort(kmeans_primary_study.cluster_centers_.flatten()))
 
     # sponsor type, categorical
     spon_map = {
@@ -266,6 +320,15 @@ if __name__ == "__main__":
 
     # number of locations, int
     df["num_locations"] = df["protocolSection_contactsLocationsModule_locations"].apply(count_loc)
+
+    loc_map = {
+        "USA": 0,
+        "non-USA": 1,
+        "USA & non-USA": 2
+    }
+    #location of trials, categorical
+    df['location0'] = df["protocolSection_contactsLocationsModule_locations"].apply(trial_loc)
+    df['location'] = df['location0'].map(loc_map)
 
     # outcome measures, bool/int
     # Combine outcome measures
@@ -362,10 +425,15 @@ if __name__ == "__main__":
         # 'protocolSection_identificationModule_nctId',
         'primary_study_duration_days',
         'study_duration_days',
+        'study_cluster',
+        'primary_study_cluster',
+        'study_duration_bins',
+        'primary_study_duration_bins',
         'number_of_conditions',
         'number_of_groups',
         'age_group',
         'num_locations',
+        'location',
         # 'intervention_types',
         'number_of_intervention_types',
         'sponsor_type',
@@ -410,30 +478,17 @@ if __name__ == "__main__":
     # handle missing values by filling with the mode to preserve data distribution
     nan_counts = clean_df.isna().sum()
 
-    # cols that are vital for accurate prediction
-    need_cols = [
-        'primary_study_duration_days',
-        'study_duration_days',
-        'num_locations',
-        'enroll_count']
-    
-    # remove rows with NaNs for primary_study_duration_days, study_duration_days, num_locations, enrollmentinfo_count
-    clean_df2 = clean_df.dropna(subset=need_cols).copy()
-    msg = f"{len(clean_df) - len(clean_df2)} rows were dropped due to missing values in one of: {need_cols}"
-    logger.info(msg)
-    print(msg)
-
     nan_cols = nan_counts[nan_counts > 0].index.tolist()
     # remove mode calculation for 'primary_max_days' and 'secondary_max_days'
     nan_cols.remove('primary_max_days')
     nan_cols.remove('secondary_max_days')
     for column in nan_cols:
-        mode_value = clean_df2[column].mode()[0]  # Calculate the mode
-        clean_df2[column] = clean_df2[column].fillna(mode_value)
+        mode_value = clean_df[column].mode()[0]  # Calculate the mode
+        clean_df[column] = clean_df[column].fillna(mode_value)
 
     # one hot encode remaining object columns
-    object_columns = list(clean_df2.select_dtypes(include=['object']).columns)
-    encoded_df = pd.get_dummies(clean_df2, columns=object_columns)
+    object_columns = list(clean_df.select_dtypes(include=['object']).columns)
+    encoded_df = pd.get_dummies(clean_df, columns=object_columns)
 
     # Apply function to all column names
     encoded_df.columns = encoded_df.columns.map(remove_special_chars)
