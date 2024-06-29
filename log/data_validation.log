@@ -43,3 +43,22 @@
 2024-06-26 19:40:15,938 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
 2024-06-26 19:40:16,539 - Data processing completed.
 2024-06-26 20:45:12,216 - Data processing completed.
+2024-06-27 18:34:34,016 - Data processing completed.
+2024-06-27 19:13:33,775 - CSV file columns match the YAML schema.
+2024-06-27 19:13:34,195 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-27 19:13:34,589 - Data processing completed.
+2024-06-27 19:24:55,429 - CSV file columns match the YAML schema.
+2024-06-27 19:24:55,804 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-27 19:24:56,480 - Data processing completed.
+2024-06-27 19:30:07,098 - CSV file columns match the YAML schema.
+2024-06-27 19:30:07,489 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-27 19:30:07,866 - Data processing completed.
+2024-06-29 14:47:57,238 - Data processing completed.
+2024-06-29 14:57:22,064 - CSV file columns match the YAML schema.
+2024-06-29 14:57:22,449 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-29 14:57:22,454 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 677.0, closed='right'), 1: Interval(677.0, 1131.0, closed='right'), 2: Interval(1131.0, 1604.2, closed='right'), 3: Interval(1604.2, 2211.0, closed='right'), 4: Interval(2211.0, 4722.0, closed='right')}
+2024-06-29 14:57:22,832 - Data processing completed.
+2024-06-29 16:30:53,341 - CSV file columns match the YAML schema.
+2024-06-29 16:30:53,720 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-06-29 16:30:53,726 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 677.0, closed='right'), 1: Interval(677.0, 1131.0, closed='right'), 2: Interval(1131.0, 1604.2, closed='right'), 3: Interval(1604.2, 2211.0, closed='right'), 4: Interval(2211.0, 4722.0, closed='right')}
+2024-06-29 16:30:54,192 - Data processing completed.

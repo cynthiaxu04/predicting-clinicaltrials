@@ -186,6 +186,29 @@ def find_max_duration(durations):
 def remove_special_chars(col):
     return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
 
+def count_criteria(criteria):
+    # pattern
+    # line break, \n, followed by any amount of whitespace
+    # followed by an alphanumeric character 1-2 characters in length followed by a period
+    # OR an asterisk
+    # OR a hyphen
+    pattern =  r'\n\s*\w{1,2}\.|[*]|\-'
+    if "exclusion criteria" in criteria.lower():
+        parts = criteria.lower().split("exclusion criteria")
+        inclusion_criteria = parts[0]
+        exclusion_criteria = parts[1]
+
+        inclusion_matches = re.findall(pattern, inclusion_criteria)
+        exclusion_matches = re.findall(pattern, exclusion_criteria)
+        num_inclusion = len(inclusion_matches)
+        num_exclusion = len(exclusion_matches)
+    else:
+        inclusion_matches = re.findall(pattern, criteria)
+        num_inclusion = len(inclusion_matches)
+        num_exclusion = np.nan
+    
+    return num_inclusion, num_exclusion
+
 #########################################################################################################################
 # Code to do actual data processing
 if __name__ == "__main__":
@@ -225,17 +248,19 @@ if __name__ == "__main__":
     # Desired number of intervals
     n_intervals = 5
 
-    # Fit K-Means for study_duration_days
-    kmeans_study = KMeans(n_clusters=n_intervals, random_state=42)
-    df['study_cluster'] = kmeans_study.fit_predict(df[['study_duration_days']])
+    df['study_eq_bins'] = pd.qcut(df['study_duration_days'], q=n_intervals)
+    df['primary_eq_bins'] = pd.qcut(df['primary_study_duration_days'], q=n_intervals)
 
-    # Fit K-Means for primary_study_duration_days
-    kmeans_primary_study = KMeans(n_clusters=n_intervals, random_state=42)
-    df['primary_study_cluster'] = kmeans_primary_study.fit_predict(df[['primary_study_duration_days']])
+    df['study_eq_labels'] = df['study_eq_bins'].cat.codes
+    df['primary_eq_labels'] = df['primary_eq_bins'].cat.codes
 
-    # Assign intervals based on cluster centroids for each column
-    df['study_duration_bins'] = pd.cut(df['study_duration_days'], bins=np.sort(kmeans_study.cluster_centers_.flatten()))
-    df['primary_study_duration_bins'] = pd.cut(df['primary_study_duration_days'], bins=np.sort(kmeans_primary_study.cluster_centers_.flatten()))
+    bins_dict = df.groupby('study_eq_labels')['study_eq_bins'].apply(lambda x: x.unique()[0]).to_dict()
+    msg2 = f"Bin labels and their corresponding intervals are: {bins_dict}"
+    print(msg2)
+    logger.info(msg2)
+
+    # get number of inclusion and exclusion criteria
+    df[['num_inclusion', 'num_exclusion']]= df['protocolSection_eligibilityModule_eligibilityCriteria'].apply(count_criteria).apply(pd.Series)
 
     # sponsor type, categorical
     spon_map = {
@@ -422,37 +447,31 @@ if __name__ == "__main__":
 
     #make a dataframe with just the columns of interest
     cols = [
-        # 'protocolSection_identificationModule_nctId',
+        'protocolSection_identificationModule_nctId',
         'primary_study_duration_days',
         'study_duration_days',
-        'study_cluster',
-        'primary_study_cluster',
-        'study_duration_bins',
-        'primary_study_duration_bins',
+        'primary_eq_bins',
+        'study_eq_bins',
+        'study_eq_labels',
+        'primary_eq_labels',
         'number_of_conditions',
         'number_of_groups',
         'age_group',
         'num_locations',
         'location',
+        'num_inclusion',
+        'num_exclusion',
         # 'intervention_types',
         'number_of_intervention_types',
         'sponsor_type',
         'intervention_model',
         'resp_party',
-        # 'protocolSection_sponsorCollaboratorsModule_responsibleParty_type',
         'has_dmc',
-        # 'protocolSection_oversightModule_oversightHasDmc',
-        # 'protocolSection_designModule_phases',
         'phase',
         'allocation',
-        # 'protocolSection_designModule_designInfo_allocation',
-        # 'protocolSection_designModule_designInfo_primaryPurpose',
-        # 'protocolSection_designModule_designInfo_maskingInfo_masking',
         'masking',
         'enroll_count',
         'healthy_vol',
-        # 'protocolSection_designModule_enrollmentInfo_count',
-        # 'protocolSection_eligibilityModule_healthyVolunteers',
         'treatment_purpose',
         'diagnostic_purpose',
         'prevention_purpose',
@@ -488,6 +507,7 @@ if __name__ == "__main__":
 
     # one hot encode remaining object columns
     object_columns = list(clean_df.select_dtypes(include=['object']).columns)
+    object_columns = [i for i in object_columns if 'nctId' not in i]
     encoded_df = pd.get_dummies(clean_df, columns=object_columns)
 
     # Apply function to all column names
