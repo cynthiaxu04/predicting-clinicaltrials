@@ -22,3 +22,4 @@ columns:
   - protocolSection_outcomesModule_primaryOutcomes
   - protocolSection_outcomesModule_secondaryOutcomes
   - protocolSection_eligibilityModule_eligibilityCriteria
+  - protocolSection_conditionsModule_conditions
