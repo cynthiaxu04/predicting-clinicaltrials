@@ -1,0 +1,26 @@
+[
+    {
+        "model": "xgb",
+        "accuracy": 0.35860655737704916,
+        "precision": 0.33567596410342876,
+        "r_squared": 0.0839577764098639,
+        "mean_squared_error": 1.7684426229508197,
+        "mean_absolute_error": 0.9569672131147541
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.36270491803278687,
+        "precision": 0.3432989760659865,
+        "r_squared": 0.06272852441472743,
+        "mean_squared_error": 1.8094262295081966,
+        "mean_absolute_error": 0.9651639344262295
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.3729508196721312,
+        "precision": 0.3583169969822839,
+        "r_squared": 0.130662130799164,
+        "mean_squared_error": 1.6782786885245902,
+        "mean_absolute_error": 0.9241803278688525
+    }
+]
