@@ -151,6 +151,16 @@ if __name__ == "__main__":
     filtered = corrmat.loc['study_duration_days'][(abs(corrmat.loc['study_duration_days']) > 0.05) & (~corrmat.columns.isin(exclude_columns))]
     corr_cols = filtered.index.to_list()
 
+    # save the list of columns used for training
+    # File path
+    file_path = f'model_columns_{args.model}.txt'
+
+    # Open the file in write mode
+    with open(file_path, 'w') as file:
+        # Write each element of the list to the file
+        for item in corr_cols:
+            file.write(f"{item}\n")
+
     # split the data
     x_cols = corr_cols
     y_cols = ['study_eq_labels']
