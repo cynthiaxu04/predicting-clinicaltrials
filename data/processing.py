@@ -1,4 +1,4 @@
- import pandas as pd
+import pandas as pd
 import numpy as np
 import os
 import re
@@ -275,6 +275,8 @@ def remove_special_chars(col):
     return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
 
 def count_criteria(criteria):
+    if pd.isna(criteria):
+        return np.nan, np.nan
     # pattern
     # line break, \n, followed by any amount of whitespace
     # followed by an alphanumeric character 1-2 characters in length followed by a period
