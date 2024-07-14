@@ -135,7 +135,95 @@ def extract_measures(outcomes):
     else:
         return ['No description available']  # Return a list with a default message if not iterable
 
+# Extracting timeframe in number of days    
 def extract_timeframes(outcomes):
+    # Check if 'outcomes' is iterable (i.e., a list in this context)
+    if isinstance(outcomes, list):
+        return [item.get('timeFrame', 'No description available') for item in outcomes]
+    else:
+        return ['No description available']  # Return a list with a default message if not iterable
+
+
+def extract_time_length_from_list(timeFrames):
+    # Dictionary to convert written numbers to numeric values
+    written_numbers = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, 
+        "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+        "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+        "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
+        "nineteen": 19, "twenty": 20
+    }
+
+    # Regular expression components
+    number_pattern = r"(\d+(\.\d+)?)"
+    written_number_pattern = r"(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)"
+    unit_pattern = r"(hour|day|week|month|year|minute)s?"
+    reversed_pattern = rf"(?P<unit3>{unit_pattern})\s+(?P<number2>\d+(\.\d+)?)"
+
+    # Combine the components into a single regular expression with VERBOSE flag for readability
+    time_pattern = re.compile(
+        rf"""
+        (?:
+            (?P<number>{number_pattern})\s*(?P<unit1>{unit_pattern})           # Numeric values followed by unit
+            |                         # OR
+            (?P<written>{written_number_pattern})\s*(?P<unit2>{unit_pattern})   # Written out numbers followed by unit
+            |                         # OR
+            {reversed_pattern}         # Reversed order: Day 15
+        )
+        """,
+        re.IGNORECASE | re.VERBOSE
+    )
+
+    # Function to extract time length from a single timeframe string
+    def extract_time_length(timeFrame):
+        results = time_pattern.findall(timeFrame)
+        time_durations = []
+        
+        for result in results:
+            if result[0]:  # Numeric values followed by unit
+                number = result[0]
+                unit = result[3]
+            elif result[5]:  # Written out numbers followed by unit
+                number = written_numbers[result[5].lower()]
+                unit = result[7]
+            elif result[10]:  # Reversed order: Day 15
+                number = result[11]
+                unit = result[9]
+
+            if isinstance(number, str):
+                number = float(number)
+            time_durations.append((number, unit.lower()))
+        return time_durations
+    
+    combined_durations = []
+    for timeFrame in timeFrames:
+        if timeFrame:  # This checks if the timeFrame is not empty or None
+            combined_durations.extend(extract_time_length(timeFrame))
+    return combined_durations
+
+def convert_to_days(amount, unit):
+    if unit == 'minutes' or unit == 'minute':
+        return np.ceil(amount / 1440)
+    elif unit == 'hours' or unit =='hour' :
+        return np.ceil(amount / 24)
+    elif unit == 'weeks' or unit == 'week':
+        return amount * 7
+    elif unit == 'months' or unit == 'month':
+        return amount * 30  # Simplified conversion, assuming each month has 30 days
+    elif unit == 'years' or unit == 'year':
+        return amount * 365  # Simplified conversion, assuming each year has 365 days
+    elif unit == 'days' or unit =='day':
+        return amount
+    else:
+        return 0
+
+def find_max_duration(durations):
+    if not durations:  # Check if the list is empty
+        return np.nan  # Use numpy Nan to indicate no data
+    max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
+    return max_days
+
+'''def extract_timeframes(outcomes):
     # Check if 'outcomes' is iterable (i.e., a list in this context)
     if isinstance(outcomes, list):
         return [item.get('timeFrame', 'No description available') for item in outcomes]
@@ -180,13 +268,15 @@ def find_max_duration(durations):
     if not durations:  # Check if the list is empty
         return np.nan # Use numpy Nan into indicate no data
     max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
-    return max_days
+    return max_days'''
 
 # Function to remove specified characters
 def remove_special_chars(col):
     return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
 
 def count_criteria(criteria):
+    if pd.isna(criteria):
+        return np.nan, np.nan
     # pattern
     # line break, \n, followed by any amount of whitespace
     # followed by an alphanumeric character 1-2 characters in length followed by a period
