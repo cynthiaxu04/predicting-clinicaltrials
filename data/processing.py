@@ -2,12 +2,13 @@ import pandas as pd
 import numpy as np
 import os
 import re
-import ast
+# import ast
 import argparse
 import yaml
 import logging
 from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
+import json
 
 
 #########################################################################################################################
@@ -35,6 +36,11 @@ def yaml_file(value):
         raise argparse.ArgumentTypeError(f'File must have .yaml extension: {value}')
     return value
 
+def json_file(value):
+   if not value.endswith(('.json')):
+      raise argparse.ArgumentTypeError(f"File must have extension: {value}")
+   return value
+
 def csv_file(value):
     if not value.endswith(('.csv')):
         raise argparse.ArgumentTypeError(f'File must have .csv extension: {value}')
@@ -42,8 +48,14 @@ def csv_file(value):
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Validate CSV file columns using a YAML schema.')
-    parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
-    parser.add_argument('yaml_file', type=yaml_file, help='Path to the YAML schema file')
+
+    # parser.add_argument('yaml_file', type=yaml_file, help='Path to the YAML schema file')
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--csv_file', type=csv_file, help='Path to the CSV file')
+    group.add_argument('--json_file', type=json_file, help='Path to the JSON file')
+
+    parser.add_argument('--bins', type=int, choices=range(2, 6), required=True, help='Number of bins (must be an integer between 2 and 5)')
 
     return parser.parse_args()
 
@@ -52,9 +64,14 @@ def load_yaml(file_path):
         config = yaml.safe_load(f)
     return config
 
-def validate_columns(csv_file, yaml_file):
-    # Load CSV file
-    df = pd.read_csv(csv_file)
+def validate_columns(file, yaml_file):
+    
+    if '.csv' in file:
+        df = pd.read_csv(file)
+    elif '.json' in file:
+       raw_df = pd.read_json(file)
+       df = pd.json_normalize(raw_df['protocolSection'], sep='_')
+       df.columns = ['protocolSection_' + col for col in df.columns]
 
     # Load YAML schema
     config = load_yaml(yaml_file)
@@ -76,6 +93,7 @@ def validate_columns(csv_file, yaml_file):
         success_msg = "CSV file columns match the YAML schema."
         logger.info(success_msg)
         print(success_msg)
+    return df
 
 # Function to convert dates to datetime, handling YYYY-MM format
 def convert_to_datetime(date_str):
@@ -380,17 +398,39 @@ def drop_outliers(df, threshold=5):
     df_cleaned = df.drop(index=dropped_values.dropna(how='all').index)
     return df_cleaned
 
+def interval_to_string(o):
+    if isinstance(o, pd.Interval):
+        return str(o)
+    raise TypeError(f"Object of type {o.__class__.__name__} is not JSON serializable")
+
+def save_dict_to_json(filename, data):
+    with open(filename, 'w') as json_file:
+        json.dump(data, json_file, indent=4, default=interval_to_string)
+
 #########################################################################################################################
 # Code to do actual data processing
 if __name__ == "__main__":
     # get command line arguments
     args = get_parser()
-    # validate the data csv file
-    # print(args.yaml_file)
-    validate_columns(args.csv_file, args.yaml_file)
 
-    #start data processing
-    df = pd.read_csv(args.csv_file)
+    if args.csv_file:
+        file = args.csv_file
+    elif args.json_file:
+        file = args.json_file
+
+    # validate the data file
+    current = os.path.dirname(os.path.abspath(__file__))
+    root = os.path.dirname(current)
+    # print(root)
+    path = 'config'
+    filename = 'default_cols.yaml'
+    yaml_file = os.path.join(root,path,filename)
+    if not os.path.isfile(yaml_file):
+        raise OSError(f"YAML file {yaml_file} does not exist.")
+
+    # print(args.yaml_file)
+    df = validate_columns(file=file, yaml_file=yaml_file)
+
     # len of rows
     rows0 = len(df)
     
@@ -417,7 +457,7 @@ if __name__ == "__main__":
 
     # make bins with k means clustering
     # Desired number of intervals
-    n_intervals = 5
+    n_intervals = args.bins
 
     df['study_eq_bins'] = pd.qcut(df['study_duration_days'], q=n_intervals)
     df['primary_eq_bins'] = pd.qcut(df['primary_study_duration_days'], q=n_intervals)
@@ -451,7 +491,7 @@ if __name__ == "__main__":
     df['sponsor_type'] = df['sponsor_type0'].map(spon_map2)
 
     # number of conditions, int
-    df['protocolSection_conditionsModule_conditions'] = df['protocolSection_conditionsModule_conditions'].apply(ast.literal_eval)
+    df['protocolSection_conditionsModule_conditions'] = df['protocolSection_conditionsModule_conditions'].apply(safe_eval)
     df['number_of_conditions'] = df['protocolSection_conditionsModule_conditions'].apply(lambda x: len(x))
 
     # intervention model, categorical (mapped to int/float)
@@ -492,7 +532,7 @@ if __name__ == "__main__":
     df['number_of_groups'] = df['protocolSection_armsInterventionsModule_armGroups'].apply(lambda x: len(x) if isinstance(x, list) else 0)
 
     # number of intervention types, int
-    df['protocolSection_armsInterventionsModule_interventions'] = df['protocolSection_armsInterventionsModule_interventions'].apply(eval)
+    df['protocolSection_armsInterventionsModule_interventions'] = df['protocolSection_armsInterventionsModule_interventions'].apply(safe_eval)
     df['intervention_types'] = df['protocolSection_armsInterventionsModule_interventions'].apply(extract_type)
     df['number_of_intervention_types'] = df['intervention_types'].apply(len)
 
@@ -511,11 +551,11 @@ if __name__ == "__main__":
         "adult": 1,
         "all": 2
     }
-    df["age_group0"] = df["protocolSection_eligibilityModule_stdAges"].map(age_map)
+    df["age_group0"] = df["protocolSection_eligibilityModule_stdAges"].astype(str).map(age_map)
     df["age_group"] = df["age_group0"].map(age_map2)
 
     # number of locations, int
-    df["num_locations"] = df["protocolSection_contactsLocationsModule_locations"].apply(count_loc)
+    df["num_locations"] = df["protocolSection_contactsLocationsModule_locations"].astype(str).apply(count_loc)
 
     loc_map = {
         "USA": 0,
@@ -523,7 +563,7 @@ if __name__ == "__main__":
         "USA & non-USA": 2
     }
     #location of trials, categorical
-    df['location0'] = df["protocolSection_contactsLocationsModule_locations"].apply(trial_loc)
+    df['location0'] = df["protocolSection_contactsLocationsModule_locations"].astype(str).apply(trial_loc)
     df['location'] = df['location0'].map(loc_map)
 
     # outcome measures, bool/int
@@ -647,6 +687,8 @@ if __name__ == "__main__":
     df = df.rename(columns={'protocolSection_designModule_phases': 'phase',
                              'protocolSection_designModule_enrollmentInfo_count': 'enroll_count',
                              'protocolSection_eligibilityModule_healthyVolunteers': 'healthy_vol'})
+    
+    df['phase'] = df['phase'].astype(str)
 
     #make a dataframe with just the columns of interest
     cols = [
@@ -726,10 +768,15 @@ if __name__ == "__main__":
     for column in nan_cols:
         mode_value = clean_df[column].mode()[0]  # Calculate the mode
         clean_df[column] = clean_df[column].fillna(mode_value)
+        # clean_df = clean_df.infer_objects(copy=False) # idk this was supposed to silence a warning but it didn't
+
+    # clean_df.to_csv("temp_data.csv", index=False)
 
     # one hot encode remaining object columns
     object_columns = list(clean_df.select_dtypes(include=['object']).columns)
     object_columns = [i for i in object_columns if 'nctId' not in i]
+    # print(f"these are the column types: {clean_df.dtypes}")
+    # print(f"these are the object_columns: {object_columns}")
     encoded_df = pd.get_dummies(clean_df, columns=object_columns)
 
     # Apply function to all column names
@@ -739,8 +786,12 @@ if __name__ == "__main__":
     train_df, test_df = train_test_split(encoded_df, test_size=0.3, random_state=42, shuffle=True)
 
     # save the data file
-    train_df.to_csv("cleaned_data_train.csv", index=False)
-    test_df.to_csv("cleaned_data_test.csv", index=False)
+    train_df.to_csv(os.path.join(root,"data", "cleaned_data_train.csv"), index=False)
+    test_df.to_csv(os.path.join(root, "data", "cleaned_data_test.csv"), index=False)
+
+    # save the meta data, i.e. data file name and the number of bins
+    meta_dict = {"data_file": file, "num_bins": args.bins, "bins": bins_dict}
+    save_dict_to_json(os.path.join(root,"data","metadata.json"), meta_dict)
 
 data_msg = "Data processing completed."
 logger.info(data_msg)
