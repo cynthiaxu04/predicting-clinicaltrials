@@ -735,7 +735,7 @@ if __name__ == "__main__":
         'max_treatment_duration',
         'min_treatment_duration',
         'survival_5yr_relative',
-        'conditions_category_num'
+        # 'conditions_category_num'
         # 'protocolSection_outcomesModule_primaryOutcomes',
         # 'protocolSection_outcomesModule_secondaryOutcomes',
         # 'protocolSection_eligibilityModule_eligibilityCriteria'

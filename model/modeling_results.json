@@ -1372,5 +1372,599 @@
             "3": "(1604.2, 2211.0]",
             "4": "(2211.0, 4722.0]"
         }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.141643059490085,
+        "mean_accuracy_kfold": 0.7355589029059185,
+        "precision": 0.1436436676749732,
+        "r_squared": -4.0156133351528815,
+        "mean_squared_error": 1.253541076487252,
+        "mean_absolute_error": 0.990084985835694,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.13739376770538245,
+        "mean_accuracy_kfold": 0.7348509383041486,
+        "precision": 0.139334357644724,
+        "r_squared": -3.9816091769484556,
+        "mean_squared_error": 1.245042492917847,
+        "mean_absolute_error": 0.990084985835694,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.13031161473087818,
+        "mean_accuracy_kfold": 0.7366233603213457,
+        "precision": 0.13290303888745814,
+        "r_squared": -3.9589397381455047,
+        "mean_squared_error": 1.2393767705382437,
+        "mean_absolute_error": 0.9929178470254958,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.16572237960339944,
+        "mean_accuracy_kfold": 0.5891608611058808,
+        "precision": 0.17369159124536754,
+        "r_squared": -1.3795221150777435,
+        "mean_squared_error": 1.6005665722379603,
+        "mean_absolute_error": 1.065155807365439,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 929.333]",
+            "1": "(929.333, 1594.0]",
+            "2": "(1594.0, 4453.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.17563739376770537,
+        "mean_accuracy_kfold": 0.5927050775120819,
+        "precision": 0.18355733653955675,
+        "r_squared": -1.4005798329102896,
+        "mean_squared_error": 1.614730878186969,
+        "mean_absolute_error": 1.0679886685552409,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 929.333]",
+            "1": "(929.333, 1594.0]",
+            "2": "(1594.0, 4453.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.17705382436260622,
+        "mean_accuracy_kfold": 0.5916399924684617,
+        "precision": 0.18406949863701963,
+        "r_squared": -1.293185471964303,
+        "mean_squared_error": 1.5424929178470255,
+        "mean_absolute_error": 1.0439093484419264,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 929.333]",
+            "1": "(929.333, 1594.0]",
+            "2": "(1594.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.19971671388101983,
+        "mean_accuracy_kfold": 0.47145860792066785,
+        "precision": 0.21373226171557544,
+        "r_squared": -0.7547953583573217,
+        "mean_squared_error": 2.1586402266288953,
+        "mean_absolute_error": 1.1756373937677054,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 761.0]",
+            "1": "(761.0, 1232.0]",
+            "2": "(1232.0, 1816.5]",
+            "3": "(1816.5, 4453.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.19971671388101983,
+        "mean_accuracy_kfold": 0.4771380154396535,
+        "precision": 0.2187302289647255,
+        "r_squared": -0.7237064642131958,
+        "mean_squared_error": 2.1203966005665724,
+        "mean_absolute_error": 1.1628895184135977,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 761.0]",
+            "1": "(761.0, 1232.0]",
+            "2": "(1232.0, 1816.5]",
+            "3": "(1816.5, 4453.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.20113314447592068,
+        "mean_accuracy_kfold": 0.4757277348898513,
+        "precision": 0.21699516073493816,
+        "r_squared": -0.7110406184507743,
+        "mean_squared_error": 2.104815864022663,
+        "mean_absolute_error": 1.161473087818697,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 761.0]",
+            "1": "(761.0, 1232.0]",
+            "2": "(1232.0, 1816.5]",
+            "3": "(1816.5, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.20396600566572237,
+        "mean_accuracy_kfold": 0.3941812590221553,
+        "precision": 0.22059142090691664,
+        "r_squared": -0.3581004350403727,
+        "mean_squared_error": 2.6104815864022664,
+        "mean_absolute_error": 1.2677053824362605,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 655.0]",
+            "1": "(655.0, 1053.0]",
+            "2": "(1053.0, 1437.0]",
+            "3": "(1437.0, 1978.0]",
+            "4": "(1978.0, 4453.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.22521246458923513,
+        "mean_accuracy_kfold": 0.39099730119876985,
+        "precision": 0.2537106059878527,
+        "r_squared": -0.3654694010471029,
+        "mean_squared_error": 2.6246458923512748,
+        "mean_absolute_error": 1.253541076487252,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 655.0]",
+            "1": "(655.0, 1053.0]",
+            "2": "(1053.0, 1437.0]",
+            "3": "(1437.0, 1978.0]",
+            "4": "(1978.0, 4453.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.22662889518413598,
+        "mean_accuracy_kfold": 0.3913537940124271,
+        "precision": 0.2492332903132124,
+        "r_squared": -0.3787335398592171,
+        "mean_squared_error": 2.65014164305949,
+        "mean_absolute_error": 1.2563739376770537,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase1_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 655.0]",
+            "1": "(655.0, 1053.0]",
+            "2": "(1053.0, 1437.0]",
+            "3": "(1437.0, 1978.0]",
+            "4": "(1978.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.1664670658682635,
+        "mean_accuracy_kfold": 0.6949101796407187,
+        "precision": 0.16301498385717048,
+        "r_squared": -3.9884361549497855,
+        "mean_squared_error": 1.2467065868263474,
+        "mean_absolute_error": 0.9712574850299401,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1413.0]",
+            "1": "(1413.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.1532934131736527,
+        "mean_accuracy_kfold": 0.7026946107784431,
+        "precision": 0.15365495424245848,
+        "r_squared": -4.026771879483501,
+        "mean_squared_error": 1.2562874251497007,
+        "mean_absolute_error": 0.9832335329341317,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1413.0]",
+            "1": "(1413.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.16047904191616766,
+        "mean_accuracy_kfold": 0.7104790419161676,
+        "precision": 0.15898273383303324,
+        "r_squared": -4.0123959827833575,
+        "mean_squared_error": 1.2526946107784431,
+        "mean_absolute_error": 0.9772455089820359,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1413.0]",
+            "1": "(1413.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.19281437125748502,
+        "mean_accuracy_kfold": 0.5431137724550898,
+        "precision": 0.20196110010011065,
+        "r_squared": -1.608059327214396,
+        "mean_squared_error": 1.6766467065868262,
+        "mean_absolute_error": 1.0754491017964072,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 1095.0]",
+            "1": "(1095.0, 1793.0]",
+            "2": "(1793.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.20718562874251498,
+        "mean_accuracy_kfold": 0.5464071856287426,
+        "precision": 0.21333084146964582,
+        "r_squared": -1.419906475751072,
+        "mean_squared_error": 1.555688622754491,
+        "mean_absolute_error": 1.02874251497006,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 1095.0]",
+            "1": "(1095.0, 1793.0]",
+            "2": "(1793.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.20718562874251498,
+        "mean_accuracy_kfold": 0.5485029940119761,
+        "precision": 0.21252888062867678,
+        "r_squared": -1.4515757675815322,
+        "mean_squared_error": 1.5760479041916167,
+        "mean_absolute_error": 1.037125748502994,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 3,
+        "bins": {
+            "0": "(-0.001, 1095.0]",
+            "1": "(1095.0, 1793.0]",
+            "2": "(1793.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.17604790419161676,
+        "mean_accuracy_kfold": 0.4425149700598802,
+        "precision": 0.1859056537169452,
+        "r_squared": -0.7605278850522488,
+        "mean_squared_error": 2.134131736526946,
+        "mean_absolute_error": 1.2,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 924.0]",
+            "1": "(924.0, 1413.0]",
+            "2": "(1413.0, 2001.0]",
+            "3": "(2001.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.1724550898203593,
+        "mean_accuracy_kfold": 0.45059880239520955,
+        "precision": 0.18305100717347902,
+        "r_squared": -0.741756824549447,
+        "mean_squared_error": 2.111377245508982,
+        "mean_absolute_error": 1.1868263473053893,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 924.0]",
+            "1": "(924.0, 1413.0]",
+            "2": "(1413.0, 2001.0]",
+            "3": "(2001.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.18682634730538922,
+        "mean_accuracy_kfold": 0.45149700598802395,
+        "precision": 0.1981107341788725,
+        "r_squared": -0.7387929728911098,
+        "mean_squared_error": 2.1077844311377247,
+        "mean_absolute_error": 1.1736526946107784,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 4,
+        "bins": {
+            "0": "(-0.001, 924.0]",
+            "1": "(924.0, 1413.0]",
+            "2": "(1413.0, 2001.0]",
+            "3": "(2001.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.17964071856287425,
+        "mean_accuracy_kfold": 0.37634730538922156,
+        "precision": 0.17958384264366303,
+        "r_squared": -0.36198715146198235,
+        "mean_squared_error": 2.689820359281437,
+        "mean_absolute_error": 1.3173652694610778,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 821.0]",
+            "1": "(821.0, 1216.0]",
+            "2": "(1216.0, 1614.4]",
+            "3": "(1614.4, 2161.2]",
+            "4": "(2161.2, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.17964071856287425,
+        "mean_accuracy_kfold": 0.3907185628742515,
+        "precision": 0.1820771424030023,
+        "r_squared": -0.38624337855836655,
+        "mean_squared_error": 2.7377245508982035,
+        "mean_absolute_error": 1.3269461077844311,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 821.0]",
+            "1": "(821.0, 1216.0]",
+            "2": "(1216.0, 1614.4]",
+            "3": "(1614.4, 2161.2]",
+            "4": "(2161.2, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.162874251497006,
+        "mean_accuracy_kfold": 0.39640718562874255,
+        "precision": 0.16668737502648628,
+        "r_squared": -0.4402134838478218,
+        "mean_squared_error": 2.844311377245509,
+        "mean_absolute_error": 1.3592814371257484,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase2_oncology_2011_api.json",
+        "num_bins": 5,
+        "bins": {
+            "0": "(-0.001, 821.0]",
+            "1": "(821.0, 1216.0]",
+            "2": "(1216.0, 1614.4]",
+            "3": "(1614.4, 2161.2]",
+            "4": "(2161.2, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.16228070175438597,
+        "mean_accuracy_kfold": 0.7392933033817013,
+        "precision": 0.14439149053736702,
+        "r_squared": -3.667025779145826,
+        "mean_squared_error": 1.1666666666666667,
+        "mean_absolute_error": 0.9473684210526315,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.17982456140350878,
+        "mean_accuracy_kfold": 0.7392750895513327,
+        "precision": 0.15752073983408132,
+        "r_squared": -3.7021161985379,
+        "mean_squared_error": 1.1754385964912282,
+        "mean_absolute_error": 0.9385964912280702,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.16228070175438597,
+        "mean_accuracy_kfold": 0.7382004735595896,
+        "precision": 0.14326343201754385,
+        "r_squared": -3.614390150057715,
+        "mean_squared_error": 1.1535087719298245,
+        "mean_absolute_error": 0.9429824561403509,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.21052631578947367,
+        "mean_accuracy_kfold": 0.6028535000910692,
+        "precision": 0.20770092169868204,
+        "r_squared": -1.019156678082192,
+        "mean_squared_error": 1.4517543859649122,
+        "mean_absolute_error": 0.9956140350877193,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.25,
+        "mean_accuracy_kfold": 0.5896241879667293,
+        "precision": 0.24848684210526317,
+        "r_squared": -0.8544520547945205,
+        "mean_squared_error": 1.3333333333333333,
+        "mean_absolute_error": 0.9385964912280702,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.21929824561403508,
+        "mean_accuracy_kfold": 0.579715864246251,
+        "precision": 0.20471604268402968,
+        "r_squared": -0.7934503424657535,
+        "mean_squared_error": 1.2894736842105263,
+        "mean_absolute_error": 0.9473684210526315,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.20175438596491227,
+        "mean_accuracy_kfold": 0.4566267986157489,
+        "precision": 0.21780733885997045,
+        "r_squared": -0.4771187938041106,
+        "mean_squared_error": 1.9298245614035088,
+        "mean_absolute_error": 1.1228070175438596,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 4,
+        "bins": {
+            "0": "(90.999, 774.0]",
+            "1": "(774.0, 1380.0]",
+            "2": "(1380.0, 2040.0]",
+            "3": "(2040.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.21052631578947367,
+        "mean_accuracy_kfold": 0.47204177038431183,
+        "precision": 0.21816987644549973,
+        "r_squared": -0.2589080629012306,
+        "mean_squared_error": 1.644736842105263,
+        "mean_absolute_error": 1.0482456140350878,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 4,
+        "bins": {
+            "0": "(90.999, 774.0]",
+            "1": "(774.0, 1380.0]",
+            "2": "(1380.0, 2040.0]",
+            "3": "(2040.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.19298245614035087,
+        "mean_accuracy_kfold": 0.46325056159310307,
+        "precision": 0.20578142614386477,
+        "r_squared": -0.4133341186171149,
+        "mean_squared_error": 1.8464912280701755,
+        "mean_absolute_error": 1.1096491228070176,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 4,
+        "bins": {
+            "0": "(90.999, 774.0]",
+            "1": "(774.0, 1380.0]",
+            "2": "(1380.0, 2040.0]",
+            "3": "(2040.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.21052631578947367,
+        "mean_accuracy_kfold": 0.3839718292756967,
+        "precision": 0.21579390395179868,
+        "r_squared": -0.18249794799173769,
+        "mean_squared_error": 2.5219298245614037,
+        "mean_absolute_error": 1.25,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 5,
+        "bins": {
+            "0": "(90.999, 677.0]",
+            "1": "(677.0, 1131.0]",
+            "2": "(1131.0, 1604.2]",
+            "3": "(1604.2, 2211.0]",
+            "4": "(2211.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "accuracy": 0.20614035087719298,
+        "mean_accuracy_kfold": 0.38508287292817683,
+        "precision": 0.19826905853221644,
+        "r_squared": 0.008758241857360849,
+        "mean_squared_error": 2.1140350877192984,
+        "mean_absolute_error": 1.1754385964912282,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 5,
+        "bins": {
+            "0": "(90.999, 677.0]",
+            "1": "(677.0, 1131.0]",
+            "2": "(1131.0, 1604.2]",
+            "3": "(1604.2, 2211.0]",
+            "4": "(2211.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "accuracy": 0.15789473684210525,
+        "mean_accuracy_kfold": 0.36744581385465364,
+        "precision": 0.1563449263322547,
+        "r_squared": -0.1084632938566028,
+        "mean_squared_error": 2.3640350877192984,
+        "mean_absolute_error": 1.2763157894736843,
+        "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
+        "num_bins": 5,
+        "bins": {
+            "0": "(90.999, 677.0]",
+            "1": "(677.0, 1131.0]",
+            "2": "(1131.0, 1604.2]",
+            "3": "(1604.2, 2211.0]",
+            "4": "(2211.0, 4722.0]"
+        }
     }
 ]

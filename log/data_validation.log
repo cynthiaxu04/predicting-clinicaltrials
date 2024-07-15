@@ -357,3 +357,63 @@
 2024-07-14 18:03:14,539 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 677.0, closed='right'), 1: Interval(677.0, 1131.0, closed='right'), 2: Interval(1131.0, 1604.2, closed='right'), 3: Interval(1604.2, 2211.0, closed='right'), 4: Interval(2211.0, 4722.0, closed='right')}
 2024-07-14 18:03:15,110 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 239
 2024-07-14 18:03:15,128 - Data processing completed.
+2024-07-14 19:35:46,058 - CSV file columns match the YAML schema.
+2024-07-14 19:35:46,691 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:35:46,697 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 1232.0, closed='right'), 1: Interval(1232.0, 4453.0, closed='right')}
+2024-07-14 19:35:47,747 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 486
+2024-07-14 19:35:47,800 - Data processing completed.
+2024-07-14 19:35:59,039 - CSV file columns match the YAML schema.
+2024-07-14 19:35:59,665 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:35:59,669 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 929.333, closed='right'), 1: Interval(929.333, 1594.0, closed='right'), 2: Interval(1594.0, 4453.0, closed='right')}
+2024-07-14 19:36:00,824 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 486
+2024-07-14 19:36:00,871 - Data processing completed.
+2024-07-14 19:36:14,667 - CSV file columns match the YAML schema.
+2024-07-14 19:36:15,787 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:36:15,793 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 761.0, closed='right'), 1: Interval(761.0, 1232.0, closed='right'), 2: Interval(1232.0, 1816.5, closed='right'), 3: Interval(1816.5, 4453.0, closed='right')}
+2024-07-14 19:36:16,986 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 486
+2024-07-14 19:36:17,032 - Data processing completed.
+2024-07-14 19:36:31,071 - CSV file columns match the YAML schema.
+2024-07-14 19:36:31,693 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:36:31,696 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 655.0, closed='right'), 1: Interval(655.0, 1053.0, closed='right'), 2: Interval(1053.0, 1437.0, closed='right'), 3: Interval(1437.0, 1978.0, closed='right'), 4: Interval(1978.0, 4453.0, closed='right')}
+2024-07-14 19:36:32,755 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 486
+2024-07-14 19:36:32,802 - Data processing completed.
+2024-07-14 19:36:49,609 - CSV file columns match the YAML schema.
+2024-07-14 19:36:50,362 - 26 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:36:50,365 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 1413.0, closed='right'), 1: Interval(1413.0, 4722.0, closed='right')}
+2024-07-14 19:36:51,655 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 686
+2024-07-14 19:36:51,709 - Data processing completed.
+2024-07-14 19:37:04,770 - CSV file columns match the YAML schema.
+2024-07-14 19:37:05,515 - 26 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:37:05,518 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 1095.0, closed='right'), 1: Interval(1095.0, 1793.0, closed='right'), 2: Interval(1793.0, 4722.0, closed='right')}
+2024-07-14 19:37:06,821 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 686
+2024-07-14 19:37:06,875 - Data processing completed.
+2024-07-14 19:37:21,553 - CSV file columns match the YAML schema.
+2024-07-14 19:37:22,338 - 26 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:37:22,341 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 924.0, closed='right'), 1: Interval(924.0, 1413.0, closed='right'), 2: Interval(1413.0, 2001.0, closed='right'), 3: Interval(2001.0, 4722.0, closed='right')}
+2024-07-14 19:37:23,634 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 686
+2024-07-14 19:37:23,689 - Data processing completed.
+2024-07-14 19:37:39,253 - CSV file columns match the YAML schema.
+2024-07-14 19:37:40,087 - 26 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:37:40,092 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 821.0, closed='right'), 1: Interval(821.0, 1216.0, closed='right'), 2: Interval(1216.0, 1614.4, closed='right'), 3: Interval(1614.4, 2161.2, closed='right'), 4: Interval(2161.2, 4722.0, closed='right')}
+2024-07-14 19:37:41,449 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 686
+2024-07-14 19:37:41,505 - Data processing completed.
+2024-07-14 19:37:53,539 - CSV file columns match the YAML schema.
+2024-07-14 19:37:53,693 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:37:53,695 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 1380.0, closed='right'), 1: Interval(1380.0, 4722.0, closed='right')}
+2024-07-14 19:37:54,268 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 239
+2024-07-14 19:37:54,286 - Data processing completed.
+2024-07-14 19:38:01,463 - CSV file columns match the YAML schema.
+2024-07-14 19:38:01,646 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:38:01,648 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 1004.0, closed='right'), 1: Interval(1004.0, 1783.0, closed='right'), 2: Interval(1783.0, 4722.0, closed='right')}
+2024-07-14 19:38:02,282 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 239
+2024-07-14 19:38:02,299 - Data processing completed.
+2024-07-14 19:38:10,871 - CSV file columns match the YAML schema.
+2024-07-14 19:38:11,065 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:38:11,068 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 774.0, closed='right'), 1: Interval(774.0, 1380.0, closed='right'), 2: Interval(1380.0, 2040.0, closed='right'), 3: Interval(2040.0, 4722.0, closed='right')}
+2024-07-14 19:38:11,645 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 239
+2024-07-14 19:38:11,662 - Data processing completed.
+2024-07-14 19:38:20,923 - CSV file columns match the YAML schema.
+2024-07-14 19:38:21,076 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-14 19:38:21,079 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 677.0, closed='right'), 1: Interval(677.0, 1131.0, closed='right'), 2: Interval(1131.0, 1604.2, closed='right'), 3: Interval(1604.2, 2211.0, closed='right'), 4: Interval(2211.0, 4722.0, closed='right')}
+2024-07-14 19:38:21,652 - The number of dropped due to outliers (greather than 5 stdevs from the mean) is 239
+2024-07-14 19:38:21,670 - Data processing completed.
