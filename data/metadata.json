@@ -1,11 +1,9 @@
 {
-    "data_file": "/Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/phase3_oncology_2011_api.csv",
-    "num_bins": 5,
+    "data_file": "phase3_oncology_2011_api.csv",
+    "num_bins": 3,
     "bins": {
-        "0": "(90.999, 677.0]",
-        "1": "(677.0, 1131.0]",
-        "2": "(1131.0, 1604.2]",
-        "3": "(1604.2, 2211.0]",
-        "4": "(2211.0, 4722.0]"
+        "0": "(90.999, 1004.0]",
+        "1": "(1004.0, 1783.0]",
+        "2": "(1783.0, 4722.0]"
     }
 }
