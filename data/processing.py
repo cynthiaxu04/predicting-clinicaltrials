@@ -290,7 +290,7 @@ def find_max_duration(durations):
 
 # Function to remove specified characters
 def remove_special_chars(col):
-    return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
+    return col.replace("[", "").replace("]", "").replace("'", "").replace(", ", "_")
 
 def count_criteria(criteria):
     if pd.isna(criteria):

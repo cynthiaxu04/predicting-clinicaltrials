@@ -15,6 +15,11 @@ python train_model.py <model type>
 ```
 Where ```<model type>``` is one of the CLI arguments listed above.
 
+If you are training a model for production, use the ```--prod``` flag to save a copy of the model ```pkl``` file and the associated metadata in the ```trial_app/backend``` folder, e.g.
+```
+python train_model.py <model type> --prod
+```
+
 This is what the script does:
 1. Reads in the cleaned training dataset produced by the ```processing.py``` script.
     1. This script assumes that training dataset is ```../data/cleaned_data_train.csv```.
