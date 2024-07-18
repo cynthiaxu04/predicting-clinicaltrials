@@ -36,12 +36,12 @@ def csv_file(value):
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Train & save a model.')
-    parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
+    # parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
     parser.add_argument('model', type=str, choices=['lgb', 'xgb', 'rf'], help='Choose model type to run')
 
     return parser.parse_args()
 
-def train_model(type:str, X_train, y_train, X_test, y_test, save_model:bool):
+def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:bool):
     """Train a model and save it.
 
     Args:
@@ -107,7 +107,7 @@ def train_model(type:str, X_train, y_train, X_test, y_test, save_model:bool):
     }
 
     if save_model==True:
-        with open(f'model_{type}.pkl', 'wb') as file:
+        with open(os.path.join(root, "model", f'model_{type}.pkl'), 'wb') as file:
             pickle.dump(model, file)
 
     # filename = "modeling_results.json"
@@ -117,12 +117,17 @@ def train_model(type:str, X_train, y_train, X_test, y_test, save_model:bool):
     return row
 
 def append_to_json(data, filename):
-    # Read existing JSON data
-    with open(filename, 'r') as file:
-        try:
-            json_data = json.load(file)
-        except json.JSONDecodeError:
-            json_data = []
+    # Check if the file exists
+    if os.path.exists(filename):
+        # Read existing JSON data
+        with open(filename, 'r') as file:
+            try:
+                json_data = json.load(file)
+            except json.JSONDecodeError:
+                json_data = []
+    else:
+        # print(f"File {filename} does not exist. Creating it.")
+        json_data = []
 
     # Append new data to the existing JSON data
     json_data.append(data)
@@ -134,13 +139,29 @@ def append_to_json(data, filename):
 #########################################################################################################################
 # Code to do actual modeling
 if __name__ == "__main__":
+    # get data file path
+    current = os.path.dirname(os.path.abspath(__file__))
+    root = os.path.dirname(current)
+    path = 'data'
+    filename = 'cleaned_data_train.csv'
+    meta_file = 'metadata.json'
+    
+    file = os.path.join(root,path,filename)
+
+    # do some data file validation
+    if os.path.isfile(file):
+        print(f"Train data file is: {file}")
+    else:
+        raise OSError("File does not exist.")
+    
+    logger.info(f"Train data file is: {file}")
     # get command line arguments
     args = get_parser()
     # validate the data csv file
-    csv_file(args.csv_file)
+    csv_file(file)
 
     # read in the data
-    df = pd.read_csv(args.csv_file)
+    df = pd.read_csv(file)
 
     # get only the numerical columns
     temp_df = df.select_dtypes(exclude='object')
@@ -153,7 +174,7 @@ if __name__ == "__main__":
 
     # save the list of columns used for training
     # File path
-    file_path = f'model_columns_{args.model}.txt'
+    file_path = os.path.join(root, "model", f'model_columns_{args.model}.txt')
 
     # Open the file in write mode
     with open(file_path, 'w') as file:
@@ -165,17 +186,25 @@ if __name__ == "__main__":
     x_cols = corr_cols
     y_cols = ['study_eq_labels']
     X = df[x_cols]
-    y = df[y_cols]
+    y = df[y_cols].values.ravel()
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # train and save a model
     results = train_model(type=args.model, X_train=X_train, y_train=y_train,
-                          X_test=X_test, y_test=y_test, save_model=False)
+                          X_test=X_test, y_test=y_test, save_model=True, root=root)
     print(f"Model results: {results}")
 
-    filename = "modeling_results.json"
-    append_to_json(results, filename=filename)
+    json_path = os.path.join(root,path,meta_file)
+    if not os.path.isfile(json_path):
+        raise OSError("File does not exist.")
+    
+    with open(json_path, 'r') as file:
+        meta_data = json.load(file)
 
+    results.update(meta_data)
+    json_filename = "modeling_results.json"
+    append_to_json(results, filename=os.path.join(root, "model", json_filename))
 
 
 data_msg = "Model training complete."

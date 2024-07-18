@@ -5,16 +5,27 @@
 
 The purpose of this script is to validate the correct raw data columns are available (from the clinicaltrials.gov website) and to process the data so that it is ready for modeleling experiments.
 
-1. The raw data file, manually downloaded from CT.gov, should be saved as a ```.csv``` in this ```/data``` folder.
-2. To process this data, ensure you are in the ```/data``` directory. Then, run the command:
+1. The raw data file, manually downloaded from CT.gov API, can be saved as either a ```.csv``` or a ```.json``` in this ```/data``` folder.
+2. To process this data, ensure you are in the ```/data``` directory. You must specify:
+    1. the data file (either ```.json``` or ```.csv```)
+    2. the number of bins to split the duration (must be an integer between 2 and 5)
+
+3. Run this command for a ```.csv``` data file OR a ```.json``` data file:
 ```
-python processing.py <file_name.csv> ../config/default_cols.yaml
+python processing.py --csv <file_name.csv> --bins <int>
+python processing.py --json <file_name.json> --bins <int>
 ```
-3. This script returns two data ```csv``` files, in which the cleaned data is split 70:30 (70% for training & validation, 30% for testing):
+This script also reads in a yaml file ```../config/default_cols.yaml``` to validate the correct data columns are in the file.
+
+4. This script returns two data ```csv``` files, in which the cleaned data is split 70:30 (70% for training & validation, 30% for testing):
 ```
 cleaned_data_train.csv
 cleaned_data_test.csv
 ```
+5. The script also returns a ```metadata.json``` file that contains important metadata for downstream in the modeling pipeline:
+    1. name of the original data file (should include the phase)
+    2. number of bins specified by user
+    3. day intervals of the bins
 ### Notes
 * The relevant columns for data processing are explicity declared in ```/config/default_cols.yaml```. You can add or remove columns as necessary.
 * If any columns are missing, these will be printed in the ```/log/data_validation.log``` file.

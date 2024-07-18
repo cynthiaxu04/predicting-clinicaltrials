@@ -31,13 +31,13 @@ def csv_file(value):
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Train & save a model.')
-    parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
+    # parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
     parser.add_argument('model', type=str, choices=['lgb', 'xgb', 'rf'], help='Choose model type to run')
 
     return parser.parse_args()
 
-def get_model_files(type:str):
-    model_file = f"model_{type}.pkl"
+def get_model_files(root, type:str):
+    model_file = os.path.join(root, "model", f"model_{type}.pkl")
 
     if os.path.exists(model_file):
         with open(model_file, 'rb') as file:
@@ -45,7 +45,7 @@ def get_model_files(type:str):
     else:
         raise ValueError(f"Pickle file: {model_file} does not exist.")
     
-    cols_file = f'model_columns_{type}.txt'
+    cols_file = os.path.join(root, "model", f'model_columns_{type}.txt')
 
     # Initialize an empty list to store the read lines
     cols_list = []
@@ -79,15 +79,31 @@ def append_to_json(data, filename):
 #########################################################################################################################
 # Code to do actual modeling
 if __name__ == "__main__":
+    # get data file path
+    current = os.path.dirname(os.path.abspath(__file__))
+    root = os.path.dirname(current)
+    path = 'data'
+    filename = 'cleaned_data_test.csv'
+    meta_file = 'metadata.json'
+    
+    file = os.path.join(root,path,filename)
+
+    # do some data file validation
+    if os.path.isfile(file):
+        print(f"Test data file is: {file}")
+    else:
+        raise OSError("File does not exist.")
+    
+    logger.info(f"Test data file is: {file}")
     # get command line arguments
     args = get_parser()
     # validate the data csv file
-    csv_file(args.csv_file)
+    csv_file(file)
 
     # read in the data
-    df = pd.read_csv(args.csv_file)
+    df = pd.read_csv(file)
 
-    model, cols_list = get_model_files(args.model)
+    model, cols_list = get_model_files(type=args.model, root=root)
 
     x_cols = cols_list
     y_cols = ['study_eq_labels']
@@ -111,8 +127,16 @@ if __name__ == "__main__":
         'mean_absolute_error': mae
     }
 
-    filename = "modeling_test_results.json"
-    append_to_json(row, filename=filename)
+    json_path = os.path.join(root,path,meta_file)
+    if not os.path.isfile(json_path):
+        raise OSError("File does not exist.")
+    
+    with open(json_path, 'r') as file:
+        meta_data = json.load(file)
+
+    row.update(meta_data)
+    json_filename = "modeling_test_results.json"
+    append_to_json(row, filename=os.path.join(root,'model',json_filename))
 
 data_msg = "Model evaluation complete."
 logger.info(data_msg)

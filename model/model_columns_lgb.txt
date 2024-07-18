@@ -25,6 +25,5 @@ secondary_max_days
 max_treatment_duration
 min_treatment_duration
 survival_5yr_relative
-conditions_category_num
 phase_PHASE2_ PHASE3
 phase_PHASE3
