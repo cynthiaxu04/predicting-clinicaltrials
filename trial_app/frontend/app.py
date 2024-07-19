@@ -1,5 +1,8 @@
 import streamlit as st
 
+# To run:
+# "streamlit run app.py" in terminal
+
 # st.page_link('pages/home.py', label='Home')
 # st.page_link('pages/about.py', label='About')
 # st.page_link('pages/contact.py', label='Contact us')
