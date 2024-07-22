@@ -55,7 +55,10 @@ def get_model_files(root, type:str):
         with open(cols_file, 'r') as file:
             # Read all lines from the file
             lines = file.readlines()
-            cols_list = [line.strip() for line in lines]
+
+            for line in lines:
+                col_name = line.split(':')[0].strip()
+                cols_list.append(col_name)
     else:
         raise ValueError(f"Pickle file: {cols_file} does not exist.")
     

@@ -290,7 +290,7 @@ def find_max_duration(durations):
 
 # Function to remove specified characters
 def remove_special_chars(col):
-    return col.replace("[", "").replace("]", "").replace("'", "").replace(",", "_")
+    return col.replace("[", "").replace("]", "").replace("'", "").replace(", ", "_")
 
 def count_criteria(criteria):
     if pd.isna(criteria):
@@ -407,6 +407,18 @@ def save_dict_to_json(filename, data):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=4, default=interval_to_string)
 
+def convert_dtypes(df):
+    # Convert all int64 columns to int
+    int_cols = df.select_dtypes(include=['int8', 'int16', 'int32', 'int64']).columns
+    df[int_cols] = df[int_cols].astype(int)
+    
+    # Convert all float64 columns to float
+    float_cols = df.select_dtypes(include=['float16', 'float32', 'float64']).columns
+    df[float_cols] = df[float_cols].astype(float)
+    
+    return df
+
+
 #########################################################################################################################
 # Code to do actual data processing
 if __name__ == "__main__":
@@ -427,6 +439,9 @@ if __name__ == "__main__":
     yaml_file = os.path.join(root,path,filename)
     if not os.path.isfile(yaml_file):
         raise OSError(f"YAML file {yaml_file} does not exist.")
+    
+    logger.info(f"Data file being processed: {file}")
+    logger.info(f"Number of bins: {args.bins}")
 
     # print(args.yaml_file)
     df = validate_columns(file=file, yaml_file=yaml_file)
@@ -752,7 +767,9 @@ if __name__ == "__main__":
     # get a cleaned df with the indices df with the outliers dropped
     clean_df2 = clean_df.loc[temp2.index]
 
-    msg3 = f"The number of dropped due to outliers (greather than 5 stdevs from the mean) is {len(clean_df) - len(clean_df2)}"
+    clean_df2 = convert_dtypes(clean_df2)
+
+    msg3 = f"The number of dropped due to outliers (greater than 5 stdevs from the mean) is {len(clean_df) - len(clean_df2)}"
     logger.info(msg3)
     print(msg3)
 
@@ -767,17 +784,17 @@ if __name__ == "__main__":
     nan_cols.remove('secondary_max_days')
     for column in nan_cols:
         mode_value = clean_df[column].mode()[0]  # Calculate the mode
-        clean_df[column] = clean_df[column].fillna(mode_value)
+        clean_df2[column] = clean_df[column].fillna(mode_value)
         # clean_df = clean_df.infer_objects(copy=False) # idk this was supposed to silence a warning but it didn't
 
     # clean_df.to_csv("temp_data.csv", index=False)
 
     # one hot encode remaining object columns
-    object_columns = list(clean_df.select_dtypes(include=['object']).columns)
+    object_columns = list(clean_df2.select_dtypes(include=['object']).columns)
     object_columns = [i for i in object_columns if 'nctId' not in i]
     # print(f"these are the column types: {clean_df.dtypes}")
     # print(f"these are the object_columns: {object_columns}")
-    encoded_df = pd.get_dummies(clean_df, columns=object_columns)
+    encoded_df = pd.get_dummies(clean_df2, columns=object_columns)
 
     # Apply function to all column names
     encoded_df.columns = encoded_df.columns.map(remove_special_chars)

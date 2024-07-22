@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split, cross_val_score, Stratifie
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, accuracy_score, precision_score
 import pickle
 import json
+import shutil
 
 #########################################################################################################################
 # Set up logging
@@ -38,10 +39,11 @@ def get_parser():
     parser = argparse.ArgumentParser(description='Train & save a model.')
     # parser.add_argument('csv_file', type=csv_file, help='Path to the CSV file')
     parser.add_argument('model', type=str, choices=['lgb', 'xgb', 'rf'], help='Choose model type to run')
+    parser.add_argument('--prod', action='store_true', help="Use --prod flag if this model is for production.")
 
     return parser.parse_args()
 
-def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:bool):
+def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:bool, prod:bool):
     """Train a model and save it.
 
     Args:
@@ -110,6 +112,10 @@ def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:boo
         with open(os.path.join(root, "model", f'model_{type}.pkl'), 'wb') as file:
             pickle.dump(model, file)
 
+    if prod==True:
+        with open(os.path.join(root, "trial_app", "backend", 'model.pkl'), 'wb') as file:
+            pickle.dump(model, file)
+
     # filename = "modeling_results.json"
     # with open(filename, 'a') as file:
     #     json.dump(row, file)
@@ -136,6 +142,18 @@ def append_to_json(data, filename):
     with open(filename, 'w') as file:
         json.dump(json_data, file, indent=4)
 
+def copy_json_file(src_file, dest_dir):
+    # Ensure the destination directory exists
+    os.makedirs(dest_dir, exist_ok=True)
+    
+    # Construct the destination file path
+    dest_file = os.path.join(dest_dir, os.path.basename(src_file))
+    
+    # Copy the file
+    shutil.copy2(src_file, dest_file)
+    
+    # print(f"Copied {src_file} to {dest_file}")
+
 #########################################################################################################################
 # Code to do actual modeling
 if __name__ == "__main__":
@@ -145,6 +163,9 @@ if __name__ == "__main__":
     path = 'data'
     filename = 'cleaned_data_train.csv'
     meta_file = 'metadata.json'
+
+    # path to metadata.json contains info on bins and data source
+    metadata_path = os.path.join(root, path, meta_file)
     
     file = os.path.join(root,path,filename)
 
@@ -172,15 +193,24 @@ if __name__ == "__main__":
     filtered = corrmat.loc['study_duration_days'][(abs(corrmat.loc['study_duration_days']) > 0.05) & (~corrmat.columns.isin(exclude_columns))]
     corr_cols = filtered.index.to_list()
 
-    # save the list of columns used for training
+    # save the list of column names and datatypes used for training
     # File path
     file_path = os.path.join(root, "model", f'model_columns_{args.model}.txt')
+    prod_path = os.path.join(root, "trial_app", "backend", f'model_columns.txt')
+    cols_dtypes = [(col, df[col].dtype.name) for col in corr_cols if col in df.columns]
+
 
     # Open the file in write mode
     with open(file_path, 'w') as file:
         # Write each element of the list to the file
-        for item in corr_cols:
-            file.write(f"{item}\n")
+        for column, dtype in cols_dtypes:
+            file.write(f"{column}: {dtype}\n")
+
+    if args.prod:
+        with open(prod_path, 'w') as file:
+            # Write each element of the list to the file
+            for column, dtype in cols_dtypes:
+                file.write(f"{column}: {dtype}\n")
 
     # split the data
     x_cols = corr_cols
@@ -192,8 +222,23 @@ if __name__ == "__main__":
 
     # train and save a model
     results = train_model(type=args.model, X_train=X_train, y_train=y_train,
-                          X_test=X_test, y_test=y_test, save_model=True, root=root)
+                          X_test=X_test, y_test=y_test, save_model=True, root=root, prod=args.prod)
     print(f"Model results: {results}")
+
+    # # save a copy of the model's metadata in the trial_app folder too
+    if args.prod == True:
+        dest_dir = os.path.join(root, "trial_app", "backend", meta_file)
+
+        with open(metadata_path, 'r') as file:
+            data = json.load(file)
+        
+        data["model"] = f"{args.model}"
+
+        with open(dest_dir, 'w') as file:
+            json.dump(data, file, indent=4)
+
+        # copy_json_file(dest_dir=dest_dir, src_file=metadata_path)
+
 
     json_path = os.path.join(root,path,meta_file)
     if not os.path.isfile(json_path):
