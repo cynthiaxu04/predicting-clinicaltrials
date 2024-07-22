@@ -526,3 +526,15 @@
 2024-07-17 19:41:10,303 - Model training complete.
 2024-07-17 20:24:39,706 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
 2024-07-17 20:24:40,349 - Model training complete.
+2024-07-18 19:46:25,351 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
+2024-07-18 19:46:25,893 - Model training complete.
+2024-07-18 19:49:34,703 - Test data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_test.csv
+2024-07-18 19:49:34,871 - Model evaluation complete.
+2024-07-21 19:04:30,104 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
+2024-07-21 19:04:30,638 - Model training complete.
+2024-07-21 19:10:37,960 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
+2024-07-21 19:10:38,488 - Model training complete.
+2024-07-21 19:18:33,380 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
+2024-07-21 19:18:33,901 - Model training complete.
+2024-07-21 19:26:13,998 - Train data file is: /Users/cynthiaxu/Documents/MIDS/05_2024 Summer/210 Capstone/210-capstone-clinicaltrials/data/cleaned_data_train.csv
+2024-07-21 19:26:14,530 - Model training complete.

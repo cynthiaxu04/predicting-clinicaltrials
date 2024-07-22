@@ -2030,5 +2030,85 @@
             "1": "(1004.0, 1783.0]",
             "2": "(1783.0, 4722.0]"
         }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.2324561403508772,
+        "mean_accuracy_kfold": 0.580851193005889,
+        "precision": 0.22258706778830617,
+        "r_squared": -0.8300513698630136,
+        "mean_squared_error": 1.3157894736842106,
+        "mean_absolute_error": 0.9385964912280702,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.11855670103092783,
+        "mean_accuracy_kfold": 0.6172952853598015,
+        "precision": 0.12247852233676976,
+        "r_squared": -1.1821590376503672,
+        "mean_squared_error": 1.4845360824742269,
+        "mean_absolute_error": 1.0721649484536082,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.12886597938144329,
+        "mean_accuracy_kfold": 0.6172870140612077,
+        "precision": 0.13092783505154637,
+        "r_squared": -1.212466802062178,
+        "mean_squared_error": 1.5051546391752577,
+        "mean_absolute_error": 1.0721649484536082,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.13917525773195877,
+        "mean_accuracy_kfold": 0.6263027295285359,
+        "precision": 0.14417493611522067,
+        "r_squared": -1.0836588033119825,
+        "mean_squared_error": 1.4175257731958764,
+        "mean_absolute_error": 1.0360824742268042,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.14432989690721648,
+        "mean_accuracy_kfold": 0.6186352357320098,
+        "precision": 0.152529231234736,
+        "r_squared": -1.18973597875332,
+        "mean_squared_error": 1.4896907216494846,
+        "mean_absolute_error": 1.056701030927835,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 3,
+        "bins": {
+            "0": "(90.999, 1004.0]",
+            "1": "(1004.0, 1783.0]",
+            "2": "(1783.0, 4722.0]"
+        }
     }
 ]

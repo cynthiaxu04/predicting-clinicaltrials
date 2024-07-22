@@ -193,16 +193,24 @@ if __name__ == "__main__":
     filtered = corrmat.loc['study_duration_days'][(abs(corrmat.loc['study_duration_days']) > 0.05) & (~corrmat.columns.isin(exclude_columns))]
     corr_cols = filtered.index.to_list()
 
-    # save the list of columns used for training
+    # save the list of column names and datatypes used for training
     # File path
     file_path = os.path.join(root, "model", f'model_columns_{args.model}.txt')
+    prod_path = os.path.join(root, "trial_app", "backend", f'model_columns.txt')
+    cols_dtypes = [(col, df[col].dtype.name) for col in corr_cols if col in df.columns]
 
 
     # Open the file in write mode
     with open(file_path, 'w') as file:
         # Write each element of the list to the file
-        for item in corr_cols:
-            file.write(f"{item}\n")
+        for column, dtype in cols_dtypes:
+            file.write(f"{column}: {dtype}\n")
+
+    if args.prod:
+        with open(prod_path, 'w') as file:
+            # Write each element of the list to the file
+            for column, dtype in cols_dtypes:
+                file.write(f"{column}: {dtype}\n")
 
     # split the data
     x_cols = corr_cols
@@ -219,8 +227,17 @@ if __name__ == "__main__":
 
     # # save a copy of the model's metadata in the trial_app folder too
     if args.prod == True:
-        dest_dir = os.path.join(root, "trial_app", "backend")
-        copy_json_file(dest_dir=dest_dir, src_file=metadata_path)
+        dest_dir = os.path.join(root, "trial_app", "backend", meta_file)
+
+        with open(metadata_path, 'r') as file:
+            data = json.load(file)
+        
+        data["model"] = f"{args.model}"
+
+        with open(dest_dir, 'w') as file:
+            json.dump(data, file, indent=4)
+
+        # copy_json_file(dest_dir=dest_dir, src_file=metadata_path)
 
 
     json_path = os.path.join(root,path,meta_file)
