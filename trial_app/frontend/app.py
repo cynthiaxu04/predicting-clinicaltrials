@@ -8,22 +8,30 @@ import streamlit as st
 # st.page_link('pages/contact.py', label='Contact us')
 # st.page_link('pages/trial.py', label='Try us out')
 
-home = st.Page('pages/home.py', title='Home')
-about = st.Page('pages/about.py', title='About')
-contact = st.Page('pages/contact.py', title='Contact us')
+# home = st.Page('pages/home.py', title='Home')
+# about = st.Page('pages/about.py', title='About')
+# contact = st.Page('pages/contact.py', title='Contact us')
 trial = st.Page('pages/trial.py', title='Try us out')
-loading = st.Page('pages/loading.py', title='Loading')
+loading = st.Page('pages/loading.py', title='Results')
 
+# col1, col2= st.columns(2)
+# with col1:
+#     st.page_link('pages/home.py', label='Home')
+# with col2:
+#     st.page_link('pages/trial.py', label='Try us out')
 
-col1, col2, col3, col4 = st.columns(4)
-with col1:
-    st.page_link('pages/home.py', label='Home')
-with col2:
-    st.page_link('pages/about.py', label='About')
-with col3:
-    st.page_link('pages/contact.py', label='Contact us')
-with col4:
-    st.page_link('pages/trial.py', label='Try us out')
+# col1, col2, col3, col4 = st.columns(4)
+# with col1:
+#     st.page_link('pages/home.py', label='Home')
+# with col2:
+#     st.page_link('pages/about.py', label='About')
+# with col3:
+#     st.page_link('pages/contact.py', label='Contact us')
+# with col4:
+#     st.page_link('pages/trial.py', label='Try us out')
 
-pg = st.navigation([home, about, contact, trial, loading], position='hidden')
+# pg = st.navigation([home, about, contact, trial, loading], position='hidden')
+# pg.run()
+
+pg = st.navigation([trial, loading], position='hidden')
 pg.run()

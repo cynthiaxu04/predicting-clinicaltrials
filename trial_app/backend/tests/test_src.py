@@ -1,69 +1,142 @@
 from fastapi.testclient import TestClient
-from datetime import datetime
-from src.main import app
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+from main import app
 from numpy.testing import assert_almost_equal
 
 client = TestClient(app)
 
-#DOCS - should work tests
+
+# DOCS - should work tests
 def test_docs():
-	response = client.get("/docs")
-	assert response.status_code == 200
-	assert "Swagger UI" in response.text
+    response = client.get("/docs")
+    assert response.status_code == 200
+    assert "Swagger UI" in response.text
+
 
 def test_docs_content():
-	response = client.get("/docs")
-	assert response.headers["content-type"] == "text/html; charset=utf-8"
+    response = client.get("/docs")
+    assert response.headers["content-type"] == "text/html; charset=utf-8"
 
-#OPENAPI tests
+
+# OPENAPI tests
+
 
 def test_openapi_json():
-	response = client.get("/openapi.json")
-	assert response.status_code == 200
-	assert response.headers["content-type"] == "application/json"
+    response = client.get("/openapi.json")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/json"
 
-	assert "info" in response.json()
-	assert "openapi" in response.json()
+    assert "info" in response.json()
+    assert "openapi" in response.json()
 
 
-#Predict tests
-
+# Predict tests
+# commands need to be updated if prediction columns change
 def test_predict():
-	data = {"MedInc": 0.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, 
-		"AveBedrms": 1.02380952, "Population": 322.0, "AveOccup": 2.55555556, 
-		"Latitude": 37.88, "Longitude": -122.23}
+    data = {
+        "number_of_conditions": 1,
+        "number_of_groups": 2,
+        "num_locations": 10,
+        "location": 1,
+        "num_inclusion": 5.0,
+        "num_exclusion": 3.0,
+        "number_of_intervention_types": 4,
+        "intervention_model": 1.5,
+        "resp_party": 1,
+        "has_dmc": 1.0,
+        "masking": 1.0,
+        "enroll_count": 100.0,
+        "healthy_vol": True,
+        "treatment_purpose": 1,
+        "diagnostic_purpose": 0,
+        "prevention_purpose": 0,
+        "drug_intervention": 1,
+        "biological_intervention": 0,
+        "os_outcome_measure": 1,
+        "dor_outcome_measure": 0,
+        "ae_outcome_measure": 0,
+        "primary_max_days": 365.0,
+        "secondary_max_days": 730.0,
+        "max_treatment_duration": 365,
+        "min_treatment_duration": 30,
+        "survival_5yr_relative": 0.8,
+        "phase_PHASE2_PHASE3": False,
+        "phase_PHASE3": True,
+    }
 
-	response = client.post("/predict", json=data)
-	assert response.status_code == 200
-	assert_almost_equal( response.json()["prediction"], 1.969, decimal=3)
+    response = client.post("/predict", json=data)
+    assert response.status_code == 200
+    assert_almost_equal(response.json()["bin_label"], 1)
 
-def test_predict_long():
-	data = {"MedInc": 0.3252, "HouseAge": 41.0, "AveRooms": 6.98412698,
-		"AveBedrms": 1.02380952, "Population": 322.0, "AveOccup": 2.55555556,
-		"Latitude": 37.88, "Longitude": -190.23}
-	
-	response = client.post("/predict", json=data)
-	assert response.status_code == 422
-
-def test_predict_lat():
-	data = {"MedInc": 0.3252, "HouseAge": 41.0, "AveRooms": 6.98412698,
-		"AveBedrms": 1.02380952, "Population": 322.0, "AveOccup": 2.55555556,
-		"Latitude": 100.0, "Longitude": -122.23}
-	
-	response = client.post("/predict", json=data)
-	assert response.status_code == 422
-
+# missing 1 data field
 def test_predict_missing():
-	data = {"MedInc": 0.3252}
+    data = {
+        "number_of_conditions": 1,
+        "number_of_groups": 2,
+        "num_locations": 10,
+        "location": 1,
+        "num_inclusion": 5.0,
+        "num_exclusion": 3.0,
+        "number_of_intervention_types": 4,
+        "intervention_model": 1.5,
+        "resp_party": 1,
+        "has_dmc": 1.0,
+        "masking": 1.0,
+        "enroll_count": 100.0,
+        "healthy_vol": True,
+        "treatment_purpose": 1,
+        "diagnostic_purpose": 0,
+        "prevention_purpose": 0,
+        "drug_intervention": 1,
+        "biological_intervention": 0,
+        "os_outcome_measure": 1,
+        "dor_outcome_measure": 0,
+        "ae_outcome_measure": 0,
+        "primary_max_days": 365.0,
+        "secondary_max_days": 730.0,
+        "max_treatment_duration": 365,
+        "min_treatment_duration": 30,
+        "survival_5yr_relative": 0.8,
+        "phase_PHASE2_PHASE3": False
+    }
 
-	response = client.post("/predict", json=data)
-	assert response.status_code == 422
+    response = client.post("/predict", json=data)
+    assert response.status_code == 422
 
 def test_predict_extra():
-	data = {"MedInc": 0.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, 
-		"AveBedrms": 1.02380952, "Population": 322.0, "AveOccup": 2.55555556, 
-		"Latitude": 37.88, "Longitude": -122.23, "Extra": 2}
+    data = {
+        "number_of_conditions": 1,
+        "number_of_groups": 2,
+        "num_locations": 10,
+        "location": 1,
+        "num_inclusion": 5.0,
+        "num_exclusion": 3.0,
+        "number_of_intervention_types": 4,
+        "intervention_model": 1.5,
+        "resp_party": 1,
+        "has_dmc": 1.0,
+        "masking": 1.0,
+        "enroll_count": 100.0,
+        "healthy_vol": True,
+        "treatment_purpose": 1,
+        "diagnostic_purpose": 0,
+        "prevention_purpose": 0,
+        "drug_intervention": 1,
+        "biological_intervention": 0,
+        "os_outcome_measure": 1,
+        "dor_outcome_measure": 0,
+        "ae_outcome_measure": 0,
+        "primary_max_days": 365.0,
+        "secondary_max_days": 730.0,
+        "max_treatment_duration": 365,
+        "min_treatment_duration": 30,
+        "survival_5yr_relative": 0.8,
+        "phase_PHASE2_PHASE3": False,
+        "phase_PHASE3": True,
+        "pooper": 2
+    }
 
-	response = client.post("/predict", json=data)
-	assert response.status_code == 422
-
+    response = client.post("/predict", json=data)
+    assert response.status_code == 422

@@ -3,7 +3,7 @@ import numpy as np
 # import pandas as pd
 import json
 import joblib
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel, create_model, Extra
 # from datetime import datetime
 from fastapi import FastAPI
 from typing import Union, Dict, Type
@@ -72,7 +72,10 @@ def create_pydantic_model(column_types: Dict[str, str]) -> Type[BaseModel]:
     fields = {col: type_mapping[dtype] for col, dtype in column_types.items()}
 
     # Create the Pydantic model
-    return create_model('UserInput', **fields)
+    return create_model('UserInput', **fields, __config__=Config)
+
+class Config:
+    extra = Extra.forbid 
 
 #create the dynamic Pydantic model
 UserInput = create_pydantic_model(cols)
