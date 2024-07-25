@@ -1,6 +1,149 @@
 import streamlit as st
-from processing.py import conditions_map
-from processing.py import conditions_5yr_survival_map
+import pandas as pd
+
+def conditions_map(condition):
+  # squamous cell (carcinoma)
+  if 'cell lung' in condition:
+    return 'squamous cell'
+  if 'head and neck' in condition:
+    return 'squamous cell'
+  if 'squamous cell' in condition:
+    return 'squamous cell'
+  if 'small cell' in condition:
+    return 'squamous cell'
+  if 'lung' in condition:
+    return 'squamous cell'
+  if 'keratosis' in condition:
+    return 'squamous cell'
+  if 'squamous' in condition:
+    return 'squamous cell'
+  if 'pelvic' in condition:
+    return 'squamous cell'
+  if 'uterine' in condition:
+    return 'squamous cell'
+  if 'ovarian' in condition:
+    return 'squamous cell'
+  if 'ovary' in condition:
+    return 'squamous cell'
+  if 'nsclc' in condition:
+    return 'squamous cell'
+  if 'oral' in condition:
+    return 'squamous cell'
+
+  # myeloma (blood)
+  if 'myeloma' in condition:
+    return 'myeloma'
+
+  # sarcoma (bone/soft tissue)
+  if 'sarcoma' in condition:
+    return 'sarcoma'
+  if 'gastrointestinal' in condition:
+    return 'sarcoma'
+  if 'bone' in condition:
+    return 'sarcoma'
+
+  # lymphoma (lymph system)
+  if 'lymphoma' in condition:
+    return 'lymphoma'
+  if 'lymphoid' in condition:
+    return 'lymphoma'
+  if 'lymph' in condition:
+    return 'lymphoma'
+
+  # brain
+  if 'brain cancer' in condition:
+    return 'brain'
+  if 'brain' in condition:
+    return 'brain'
+  if 'glioblastoma' in condition:
+    return 'brain'
+  if 'glioma' in condition:
+    return 'brain'
+
+  # melanoma (skin)
+  if 'melanoma' in condition:
+    return 'melanoma'
+  if 'skin' in condition:
+    return 'melanoma'
+
+  # adenocarcinoma (carcinoma)
+  if 'adenocarcinoma' in condition:
+    return 'adeno'
+  if 'prostate cancer' in condition:
+    return 'adeno'
+  if 'rectal' in condition:
+    return 'adeno'
+  if 'kidney' in condition:
+    return 'adeno'
+  if 'renal' in condition:
+    return 'adeno'
+  if 'gastric' in condition:
+    return 'adeno'
+  if 'gi' in condition:
+    return 'adeno'
+  if 'digestive' in condition:
+    return 'adeno'
+  if 'esophageal' in condition:
+    return 'adeno'
+  if 'cervix' in condition:
+    return 'adeno'
+  if 'cervical' in condition:
+    return 'adeno'
+  if 'liver' in condition:
+    return 'adeno'
+  if 'hepatic' in condition:
+    return 'adeno'
+  if 'hepatocellular' in condition:
+    return 'adeno'
+  if 'thyroid' in condition:
+    return 'adeno'
+  if 'abdomin' in condition:
+    return 'adeno'
+
+  # ductal (adenocarcinoma)
+  if 'breast' in condition:
+    return 'ductal'
+  if 'pancreatic' in condition:
+    return 'ductal'
+  if 'pancreas' in condition:
+    return 'ductal'
+
+  # leukemia (blood)
+  if 'leukemia' in condition:
+    return 'leukemia'
+  if 'hematopoietic' in condition:
+    return 'leukemia'
+  if 'myelofibrosis' in condition:
+    return 'leukemia'
+
+  # pediatric
+  if 'blastoma' in condition:
+    return 'pediatric'
+  if 'pediatric' in condition:
+    return 'pediatric'
+  if 'child' in condition:
+    return 'pediatric'
+
+  # transitional cell (carcinoma)
+  if 'bladder' in condition:
+    return 'transitional cell'
+
+  # neoplasm (non cancer)
+  if 'neoplasm' in condition:
+    return 'neoplasm'
+
+  # pain and other
+  if 'pain' in condition:
+    return 'pain'
+  elif 'carcinoma' in condition:
+    return 'carcinoma'
+  return 'other'
+
+# # change root
+# root = '/Users/adelinechin/210-capstone-clinicaltrials/data/'
+# conditions_5yr_survival_map_df = pd.read_csv(root + 'survival_dict.csv')
+# conditions_5yr_survival_map_df = conditions_5yr_survival_map_df.set_index('type')
+# conditions_5yr_survival_map = conditions_5yr_survival_map_df.to_dict('index')
 
 st.header('Try us out!')
 st.write('Below are a few questions to help us better understand your trial. Your responses will be used to generate the predicted duration.')
@@ -13,10 +156,16 @@ with st.form('Features'):
                         ('Adenocarcinoma', 'Squamous Cell Carcinoma', 'Transitional Cell Carcinoma', 'Basal Cell Carcinoma',
                         'Ductal Carcinoma', 'Other Carcinoma', 'Brain Cancer', 'Sarcoma', 'Lymphoma', 'Leukemia', 'Melanoma',
                         'Myeloma', 'Pediatric Cancer', 'Pain relating to any disease', 'Other'), index=None)
-    type = conditions_map(type)
-    survival = conditions_5yr_survival_map[type]
-    survival = survival['5yr_survival']
-    features['survival_5yr_relative'] = survival
+    
+    # type = conditions_map(type)
+    # if type in conditions_5yr_survival_map.keys():
+    #     survival = conditions_5yr_survival_map[type]
+    #     survival = survival['5yr_survival']
+    #     features['survival_5yr_relative'] = survival
+    # else:
+    #    features['survival_5yr_relative'] = 0.5
+    
+    features['survival_5yr_relative'] = 0.5
     features['number_of_conditions'] = 1
 
     # Phase
@@ -201,7 +350,7 @@ with st.form('Features'):
 
     # Outcome measures days
     st.write('20. What is the maximum duration from baseline to the primary outcome measure for one patient?')
-    primary_max = st.number_input('Primary outcome measure duration', min_value = 0, max_value=10000, step=0.5, value=None, placeholder='Type a number...')
+    primary_max = st.number_input('Primary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None, placeholder='Type a number...')
     unit = st.radio('Unit', ['Days', 'Months', 'Years'])
     if unit == 'Days':
         features['primary_max_days'] = primary_max
@@ -211,19 +360,19 @@ with st.form('Features'):
         features['primary_max_days'] = primary_max * 365
     
     st.write('21. What is the maximum duration from baseline to the secondary outcome measure for one patient?')
-    secondary_max = st.number_input('Secondary outcome measure duration', min_value = 0, max_value=10000, step=0.5, value=None, placeholder='Type a number...')
-    unit = st.radio('Unit', ['Days', 'Months', 'Years'])
-    if unit == 'Days':
+    secondary_max = st.number_input('Secondary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None, placeholder='Type a number...')
+    unit_secondary = st.radio('Unit', ['Days', 'Months', 'Years'], key=2)
+    if unit_secondary == 'Days':
         features['secondary_max_days'] = secondary_max
-    elif unit == 'Months':
+    elif unit_secondary == 'Months':
         features['secondary_max_days'] = secondary_max * 30
-    elif unit == 'Years':
+    elif unit_secondary == 'Years':
         features['secondary_max_days'] = secondary_max * 365  
 
     # Submission
     submitted = st.form_submit_button('Submit')
     if submitted:
-        if None in features:
+        if len(features) < 23:
             st.error('Please answer all questions.')
         else:
             st.switch_page('pages/loading.py')
