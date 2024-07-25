@@ -167,10 +167,19 @@ with st.form('Features'):
     
     features['survival_5yr_relative'] = 0.5
     features['number_of_conditions'] = 1
+    features['max_treatment_duration'] = 4320
+    features['min_treatment_duration'] = 14
 
     # Phase
     phase = st.radio('2\. What is the phase of your trial?', [1, 2, 3], index=None)
-    features['phase'] = phase
+    if phase == 2:
+       features['phase_PHASE2_PHASE3'] = 1
+    else:
+       features['phase_PHASE2_PHASE3'] = 0
+    if phase == 3:
+       features['phase_PHASE3'] = 1
+    else:
+       features['phase_PHASE3'] = 0
 
     # Num locations
     num_sites = st.number_input('3\. How many sites will there be?', min_value = 0, max_value=3000, step=1, value=None, placeholder='Type a number...')
@@ -224,6 +233,7 @@ with st.form('Features'):
     features['has_dmc'] = has_dmc
     st.write('')
 
+    # Responsible party
     resp_party = st.radio('9\. Who will be the responsible party?', ['PI', 'Sponsor', 'PI and Sponsor'], index=None)
     if resp_party == 'PI':
         features['resp_party'] = 0
@@ -234,7 +244,7 @@ with st.form('Features'):
 
     # Intervention model
     intervention = st.radio('10\. What is the intervention model for your trial?', ['Single Group', 'Parallel', 'Other'], index=None)
-    if intervention == 'Single':
+    if intervention == 'Single Group':
         features['intervention_model'] = 0
     elif intervention == 'Parallel':
         features['intervention_model'] = 1
@@ -248,27 +258,17 @@ with st.form('Features'):
         ['Procedure', 'Device', 'Behavioral', 'Drug', 'Radiation', 'Biological'])
     count = 0
     if 'Procedure' in intervention_type:
-        features['procedure_intervention'] = 1
         count +=1
-    else:
-        features['procedure_intervention'] = 0
     if 'Device' in intervention_type:
-        features['device_intervention'] = 1
         count +=1
-    else:
-        features['device_intervention'] = 0
     if 'Behavioral' in intervention_type:
-        features['behavioral_intervention'] = 1
         count +=1
-    else:
-        features['behavioral_intervention'] = 0
     if 'Drug' in intervention_type:
         features['drug_intervention'] = 1
         count +=1
     else:
         features['drug_intervention'] = 0
     if 'Radiation' in intervention_type:
-        features['radiation_intervention'] = 1
         count +=1
     else:
         features['radiation_intervention'] = 0
@@ -295,10 +295,6 @@ with st.form('Features'):
         features['diagnostic_purpose'] = 1
     else:
        features['diagnostic_purpose'] = 0
-    if supportive_purpose:
-       features['supportive_purpose'] = 1
-    else:
-       features['supportive_purpose'] = 0
     if prevention_purpose:
        features['prevention_purpose'] = 1
     else: 
@@ -310,16 +306,6 @@ with st.form('Features'):
     if num_groups is None or num_groups == 0:
         st.error('Your trial must have at least 1 group.')
     features['number_of_groups'] = num_groups
-
-    # Age groups
-    age_group = st.radio('14\. What is the target age group?', ['Youth', 'Adult', 'All'], index=None)
-    if age_group == 'Youth': 
-        age_group = 0
-    elif age_group == 'Adult':
-        age_group = 1
-    elif age_group == 'All':
-        age_group = 2
-    features['age_group'] = age_group
 
     # Outcome measures
     st.write('15. What are the outcome measures of your trial?')
@@ -336,13 +322,6 @@ with st.form('Features'):
         features['dor_outcome_measure'] = 1
     else:
         features['dor_outcome_measure'] = 0
-
-    # Randomized
-    rand = st.radio('16\. Is your trial randomized?', ['Yes', 'No'], index=None)
-    if rand == 'Yes':
-        features['allocation'] = 1
-    else:
-        features['allocation'] = 0 
     
     # Masking
     mask = st.radio('17\. What is the masking for your trial?', [0, 1, 2, 3, 4], index=None)
@@ -379,7 +358,7 @@ with st.form('Features'):
     # Submission
     submitted = st.form_submit_button('Submit')
     if submitted:
-        if len(features) < 22:
+        if len(features) < 18:
             st.error('Please answer all questions.')
         else:
             st.switch_page('pages/loading.py')
