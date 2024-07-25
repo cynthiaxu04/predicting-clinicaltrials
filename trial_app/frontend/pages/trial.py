@@ -214,13 +214,8 @@ with st.form('Features'):
     features['num_exclusion'] = num_exclusion
     st.write('')
 
-    # Sponsor type
-    sponsor = st.radio('8\. What is the sponsor type for your trial?', ['Industry', 'Other'], index=None)
-    features['sponsor_type'] = sponsor
-    st.write('')
-
     # DMC
-    has_dmc = st.radio('9\. Will you have a data monitoring committe?', ['Yes', 'No'], index=None)
+    has_dmc = st.radio('8\. Will you have a data monitoring committe?', ['Yes', 'No'], index=None)
 
     if has_dmc == 'Yes':
         has_dmc = 1
@@ -229,7 +224,7 @@ with st.form('Features'):
     features['has_dmc'] = has_dmc
     st.write('')
 
-    resp_party = st.radio('10\. Who will be the responsible party?', ['PI', 'Sponsor', 'PI and Sponsor'], index=None)
+    resp_party = st.radio('9\. Who will be the responsible party?', ['PI', 'Sponsor', 'PI and Sponsor'], index=None)
     if resp_party == 'PI':
         features['resp_party'] = 0
     elif resp_party == 'Sponsor':
@@ -238,7 +233,7 @@ with st.form('Features'):
         features['resp_party'] = 2
 
     # Intervention model
-    intervention = st.radio('11\. What is the intervention model for your trial?', ['Single Group', 'Parallel', 'Other'], index=None)
+    intervention = st.radio('10\. What is the intervention model for your trial?', ['Single Group', 'Parallel', 'Other'], index=None)
     if intervention == 'Single':
         features['intervention_model'] = 0
     elif intervention == 'Parallel':
@@ -247,7 +242,7 @@ with st.form('Features'):
         features['intervention_model'] = 2
 
     # Intervention type
-    st.write('12. What is the intervention type(s) for your trial?')
+    st.write('11. What is the intervention type(s) for your trial?')
     intervention_type = st.multiselect(
         'Intervention Types',
         ['Procedure', 'Device', 'Behavioral', 'Drug', 'Radiation', 'Biological'])
@@ -286,26 +281,38 @@ with st.form('Features'):
     features['number_of_intervention_types'] = count
 
     # Primary purpose
-    st.write('13. What is the primary purpose of your trial?')
+    st.write('12. What is the primary purpose of your trial?')
     treatment_purpose = st.checkbox('Treatment')
     diagnostic_purpose = st.checkbox('Diagnostic')
     prevention_purpose = st.checkbox('Prevention')
     supportive_purpose = st.checkbox('Supportive')
 
-    features['treatment_purpose'] = treatment_purpose
-    features['diagnostic_purpose'] = diagnostic_purpose
-    features['supportive_purpose'] = supportive_purpose
-    features['prevention_purpose'] = prevention_purpose
+    if treatment_purpose:
+        features['treatment_purpose'] = 1
+    else: 
+       features['treatment_purpose'] = 0
+    if diagnostic_purpose:
+        features['diagnostic_purpose'] = 1
+    else:
+       features['diagnostic_purpose'] = 0
+    if supportive_purpose:
+       features['supportive_purpose'] = 1
+    else:
+       features['supportive_purpose'] = 0
+    if prevention_purpose:
+       features['prevention_purpose'] = 1
+    else: 
+       features['prevention_purpose'] = 0
 
     # Groups
-    st.write('14. How many groups will your trial have?')
+    st.write('13. How many groups will your trial have?')
     num_groups = st.number_input('Number of groups', min_value = 0, max_value=100, step=1, value=None, placeholder='Type a number...')
     if num_groups is None or num_groups == 0:
         st.error('Your trial must have at least 1 group.')
     features['number_of_groups'] = num_groups
 
     # Age groups
-    age_group = st.radio('15\. What is the target age group?', ['Youth', 'Adult', 'All'], index=None)
+    age_group = st.radio('14\. What is the target age group?', ['Youth', 'Adult', 'All'], index=None)
     if age_group == 'Youth': 
         age_group = 0
     elif age_group == 'Adult':
@@ -315,7 +322,7 @@ with st.form('Features'):
     features['age_group'] = age_group
 
     # Outcome measures
-    st.write('16. What are the outcome measures of your trial?')
+    st.write('15. What are the outcome measures of your trial?')
     outcome_measures = st.multiselect('Outcome Measures', ['Overall Survival', 'Adverse Events', 'Duration of Response', 'Other'])
     if 'Overall Survival' in outcome_measures:
         features['os_outcome_measure'] = 1
@@ -331,25 +338,25 @@ with st.form('Features'):
         features['dor_outcome_measure'] = 0
 
     # Randomized
-    rand = st.radio('17\. Is your trial randomized?', ['Yes', 'No'], index=None)
+    rand = st.radio('16\. Is your trial randomized?', ['Yes', 'No'], index=None)
     if rand == 'Yes':
         features['allocation'] = 1
     else:
         features['allocation'] = 0 
     
     # Masking
-    mask = st.radio('18\. What is the masking for your trial?', [0, 1, 2, 3, 4], index=None)
+    mask = st.radio('17\. What is the masking for your trial?', [0, 1, 2, 3, 4], index=None)
     features['masking'] = mask
 
     # Healthy volunteers
-    vol = st.radio('19\. Will your trial include healthy volunteers?', ['Yes', 'No'], index=None)
+    vol = st.radio('18\. Will your trial include healthy volunteers?', ['Yes', 'No'], index=None)
     if vol == 'Yes':
         features['healthy_vol'] = 1
     else:
         features['healthy_vol'] = 0 
 
     # Outcome measures days
-    st.write('20. What is the maximum duration from baseline to the primary outcome measure for one patient?')
+    st.write('19. What is the maximum duration from baseline to the primary outcome measure for one patient?')
     primary_max = st.number_input('Primary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None, placeholder='Type a number...')
     unit = st.radio('Unit', ['Days', 'Months', 'Years'])
     if unit == 'Days':
@@ -359,7 +366,7 @@ with st.form('Features'):
     elif unit == 'Years':
         features['primary_max_days'] = primary_max * 365
     
-    st.write('21. What is the maximum duration from baseline to the secondary outcome measure for one patient?')
+    st.write('20. What is the maximum duration from baseline to the secondary outcome measure for one patient?')
     secondary_max = st.number_input('Secondary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None, placeholder='Type a number...')
     unit_secondary = st.radio('Unit', ['Days', 'Months', 'Years'], key=2)
     if unit_secondary == 'Days':
@@ -372,7 +379,7 @@ with st.form('Features'):
     # Submission
     submitted = st.form_submit_button('Submit')
     if submitted:
-        if len(features) < 23:
+        if len(features) < 22:
             st.error('Please answer all questions.')
         else:
             st.switch_page('pages/loading.py')
