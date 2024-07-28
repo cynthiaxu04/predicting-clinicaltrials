@@ -4,7 +4,7 @@
 The purpose of this application is to provide a user friendly interface for clinical trial conducters to enter study protocol information and get a predictied time interval for how long the trial will take.
 
 ## How to build the Application
-Within the ```\trial_app``` folder, build the application with the command:
+Within the ```/trial_app``` folder, build the application with the command:
 ```
 docker-compose build
 ```
