@@ -454,3 +454,10 @@
 2024-07-21 19:00:52,293 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 239
 2024-07-21 19:00:52,313 - Data processing completed.
 2024-07-21 19:01:54,637 - Data processing completed.
+2024-07-28 21:48:15,392 - Data file being processed: phase3_oncology_2011_api.csv
+2024-07-28 21:48:15,393 - Number of bins: 3
+2024-07-28 21:48:15,624 - CSV file columns match the YAML schema.
+2024-07-28 21:48:15,771 - 9 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-07-28 21:48:15,776 - Bin labels and their corresponding intervals are: {0: Interval(90.999, 1004.0, closed='right'), 1: Interval(1004.0, 1783.0, closed='right'), 2: Interval(1783.0, 4722.0, closed='right')}
+2024-07-28 21:48:16,345 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 239
+2024-07-28 21:48:16,364 - Data processing completed.
