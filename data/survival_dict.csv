@@ -1,0 +1,82 @@
+type,5yr_survival
+nsclc,0.28
+sclc,0.07
+lung,0.175
+oral cavity and pharynx,0.68
+lip,0.914
+tongue,0.688
+laryngeal,0.61
+thyroid,0.984
+head and neck,0.7752
+cervical,0.67
+endometrial,0.81
+invasive epithelial ovarian,0.5
+ovarian stromal,0.89
+germ cell tumors of ovary,0.92
+fallopian tube,0.55
+ovarian,0.715
+anal,0.7
+intraheptic bile duct,0.09
+extraheptic bile duct,0.11
+bile duct,0.1
+colorectal,0.63
+esophagus ,0.22
+gallbladder,0.2
+gist,0.82
+liver,0.22
+pancreatic,0.13
+small intestine,0.69
+stomach,0.36
+bladder,0.78
+kidney,0.78
+malignant mesothelioma,0.12
+breast,0.91
+penile,0.65
+prostate,0.97
+testicular,0.95
+vaginal,0.51
+leiomyosarcoma,0.38
+undifferentiated sarcoma,0.43
+endometrial stromal sarcoma,0.96
+uterine sarcoma,0.57
+vulvar,0.71
+adrenal,0.5
+melanoma,0.94
+eye,0.81
+soft tissue sarcoma,0.65
+osteosarcoma,0.59
+chondrosarcoma,0.79
+chordoma,0.84
+giant cell tumor of bone,0.78
+bone ,0.8033333333
+low-grade astrocytoma,0.48
+anaplastic astrocytoma,0.34
+glioblastoma,0.12
+oligodendroglioma,0.8
+anaplastic oligodendroglioma,0.63
+ependymoma,0.9
+meningioma,0.79
+brain,0.58
+myeloma,0.58
+hodgkin lymphoma,0.89
+non-hodgkin lymphoma,0.78
+lymphoma,0.835
+leukemia,0.67
+aml,0.295
+all,0.681
+other,0.708
+pain,
+pediatric,0.6949166667
+peds pilocytic astrocytoma,0.95
+peds diffuse astrocytoma,0.825
+peds anaplastic astrocytoma,0.25
+peds glioblastoma,0.2
+peds oligodendroglioma,0.9
+peds ependymoma,0.75
+peds embryonal tumors,0.625
+peds brain,0.6428571429
+peds all,0.9
+peds aml,0.675
+peds jmml,0.5
+peds cml,0.7
+peds leukemia,0.69375
