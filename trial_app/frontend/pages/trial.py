@@ -42,21 +42,16 @@ with st.form('Features'):
         st.error('Your trial must have at least 1 site.')
     st.write('')
     features['num_locations'] = num_sites
-    features['num_locations'] = num_sites
 
     # US vs Non US
-    st.write('4. Where will your trial take place?')
     st.write('4. Where will your trial take place?')
     us = st.checkbox('Includes USA location(s)')
     non_us = st.checkbox('Includes non-USA location(s)')
     if us and non_us:
         features['location'] = 2
-        features['location'] = 2
     elif us:
         features['location'] = 0
-        features['location'] = 0
     elif non_us:
-        features['location'] = 1
         features['location'] = 1
     st.write('')
 
@@ -66,8 +61,6 @@ with st.form('Features'):
                                    label_visibility='collapsed', placeholder='Type a number...')
     if num_patients is None or num_patients == 0:
         st.error('Your trial must have at least 1 subject.')
-    st.write('')
-    features['enroll_count'] = num_patients
     features['enroll_count'] = num_patients
 
     # Criteria
@@ -77,8 +70,6 @@ with st.form('Features'):
     if num_inclusion is None or num_inclusion == 0:
         st.error('Your trial must have at least 1 inclusion criteria.')
     features['num_inclusion'] = num_inclusion
-    features['num_inclusion'] = num_inclusion
-    st.write('')
 
     st.write('7. What is the number of exclusion criteria?')
     num_exclusion = st.number_input('Exclusion criteria', min_value = 0, max_value=500, step=1, value=None,
@@ -86,8 +77,6 @@ with st.form('Features'):
     if num_exclusion is None or num_exclusion == 0:
         st.error('Your trial must have at least 1 exclusion criteria.')
     features['num_exclusion'] = num_exclusion
-    features['num_exclusion'] = num_exclusion
-    st.write('')
 
     # DMC
     st.write('8. Will you have a data monitoring committee?')
@@ -108,15 +97,6 @@ with st.form('Features'):
     else:
         features['resp_party'] = 2
 
-    # Responsible party
-    resp_party = st.radio('9\. Who will be the responsible party?', ['PI', 'Sponsor', 'PI and Sponsor'], index=None)
-    if resp_party == 'PI':
-        features['resp_party'] = 0
-    elif resp_party == 'Sponsor':
-        features['resp_party'] = 1
-    else:
-        features['resp_party'] = 2
-
     # Intervention model
     st.write('10. What is the intervention model for your trial?')
     intervention = st.radio('10\. What is the intervention model for your trial?', ['Single Group', 'Parallel', 'Other'], index=None, label_visibility='collapsed')
@@ -130,7 +110,6 @@ with st.form('Features'):
         features['intervention_model'] = 2
 
     # Intervention type
-    st.write('11. What is the intervention type(s) for your trial?')
     st.write('11. What is the intervention type(s) for your trial?')
     intervention_type = st.multiselect(
         'Intervention Types',
@@ -161,24 +140,10 @@ with st.form('Features'):
 
     # Primary purpose
     st.write('12. What is the primary purpose of your trial?')
-    st.write('12. What is the primary purpose of your trial?')
     treatment_purpose = st.checkbox('Treatment')
     diagnostic_purpose = st.checkbox('Diagnostic')
     prevention_purpose = st.checkbox('Prevention')
     supportive_purpose = st.checkbox('Supportive')
-
-    if treatment_purpose:
-        features['treatment_purpose'] = 1
-    else: 
-       features['treatment_purpose'] = 0
-    if diagnostic_purpose:
-        features['diagnostic_purpose'] = 1
-    else:
-       features['diagnostic_purpose'] = 0
-    if prevention_purpose:
-       features['prevention_purpose'] = 1
-    else: 
-       features['prevention_purpose'] = 0
 
     if treatment_purpose:
         features['treatment_purpose'] = 1
@@ -199,7 +164,6 @@ with st.form('Features'):
                                  label_visibility='collapsed', placeholder='Type a number...')
     if num_groups is None or num_groups == 0:
         st.error('Your trial must have at least 1 group.')
-    features['number_of_groups'] = num_groups
     features['number_of_groups'] = num_groups
 
     # Outcome measures
