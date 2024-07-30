@@ -1,0 +1,41 @@
+# Start from a Python 3.12 slim base image for building the application
+FROM python:3.12-slim AS build
+ARG APP_DIR=/src
+
+# Install necessary packages
+RUN apt-get update \
+    && apt-get install -y \
+         curl \
+         build-essential \
+         libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Poetry
+ENV POETRY_VERSION=1.5.1
+RUN curl -sSL https://install.python-poetry.org | python - --version $POETRY_VERSION
+ENV PATH /root/.local/bin:$PATH
+
+WORKDIR ${APP_DIR}
+
+COPY pyproject.toml poetry.lock ./
+COPY . ./
+
+RUN python -m venv --copies ${APP_DIR}/venv
+RUN . ${APP_DIR}/venv/bin/activate && poetry install --only main
+
+# Start a new stage from the slim base image for the runtime
+FROM python:3.12-slim AS runtime
+ARG APP_DIR=/src
+
+# Copy the virtual environment from the build stage
+COPY --from=build ${APP_DIR}/venv ${APP_DIR}/venv/
+ENV PATH ${APP_DIR}/venv/bin:$PATH
+
+WORKDIR ${APP_DIR}
+COPY . ./
+
+# Expose the port Streamlit runs on
+EXPOSE 8501
+
+# Command to run the Streamlit application
+CMD ["streamlit", "run", "frontend/app.py"]

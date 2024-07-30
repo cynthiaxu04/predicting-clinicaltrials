@@ -1,10 +1,12 @@
 import streamlit as st
 import pandas as pd
+import requests
 from pages.helper_functions import conditions_5yr_survival_map, conditions_max_treatment_duration_map, conditions_min_treatment_duration_map
 
 st.header('Try us out!')
 st.write('Below are a few questions to help us better understand your trial. Your responses will be used to generate the predicted duration.')
 
+features = dict()
 features = dict()
 with st.form('Features'):
 
@@ -40,16 +42,21 @@ with st.form('Features'):
         st.error('Your trial must have at least 1 site.')
     st.write('')
     features['num_locations'] = num_sites
+    features['num_locations'] = num_sites
 
     # US vs Non US
+    st.write('4. Where will your trial take place?')
     st.write('4. Where will your trial take place?')
     us = st.checkbox('Includes USA location(s)')
     non_us = st.checkbox('Includes non-USA location(s)')
     if us and non_us:
         features['location'] = 2
+        features['location'] = 2
     elif us:
         features['location'] = 0
+        features['location'] = 0
     elif non_us:
+        features['location'] = 1
         features['location'] = 1
     st.write('')
 
@@ -61,6 +68,7 @@ with st.form('Features'):
         st.error('Your trial must have at least 1 subject.')
     st.write('')
     features['enroll_count'] = num_patients
+    features['enroll_count'] = num_patients
 
     # Criteria
     st.write('6. What is the number of inclusion criteria?')
@@ -69,6 +77,7 @@ with st.form('Features'):
     if num_inclusion is None or num_inclusion == 0:
         st.error('Your trial must have at least 1 inclusion criteria.')
     features['num_inclusion'] = num_inclusion
+    features['num_inclusion'] = num_inclusion
     st.write('')
 
     st.write('7. What is the number of exclusion criteria?')
@@ -76,6 +85,7 @@ with st.form('Features'):
                                     label_visibility='collapsed', placeholder='Type a number...')
     if num_exclusion is None or num_exclusion == 0:
         st.error('Your trial must have at least 1 exclusion criteria.')
+    features['num_exclusion'] = num_exclusion
     features['num_exclusion'] = num_exclusion
     st.write('')
 
@@ -98,6 +108,15 @@ with st.form('Features'):
     else:
         features['resp_party'] = 2
 
+    # Responsible party
+    resp_party = st.radio('9\. Who will be the responsible party?', ['PI', 'Sponsor', 'PI and Sponsor'], index=None)
+    if resp_party == 'PI':
+        features['resp_party'] = 0
+    elif resp_party == 'Sponsor':
+        features['resp_party'] = 1
+    else:
+        features['resp_party'] = 2
+
     # Intervention model
     st.write('10. What is the intervention model for your trial?')
     intervention = st.radio('10\. What is the intervention model for your trial?', ['Single Group', 'Parallel', 'Other'], index=None, label_visibility='collapsed')
@@ -105,10 +124,13 @@ with st.form('Features'):
         features['intervention_model'] = 0
     elif intervention == 'Parallel':
         features['intervention_model'] = 1
+        features['intervention_model'] = 1
     elif intervention == 'Other':
+        features['intervention_model'] = 2
         features['intervention_model'] = 2
 
     # Intervention type
+    st.write('11. What is the intervention type(s) for your trial?')
     st.write('11. What is the intervention type(s) for your trial?')
     intervention_type = st.multiselect(
         'Intervention Types',
@@ -139,10 +161,24 @@ with st.form('Features'):
 
     # Primary purpose
     st.write('12. What is the primary purpose of your trial?')
+    st.write('12. What is the primary purpose of your trial?')
     treatment_purpose = st.checkbox('Treatment')
     diagnostic_purpose = st.checkbox('Diagnostic')
     prevention_purpose = st.checkbox('Prevention')
     supportive_purpose = st.checkbox('Supportive')
+
+    if treatment_purpose:
+        features['treatment_purpose'] = 1
+    else: 
+       features['treatment_purpose'] = 0
+    if diagnostic_purpose:
+        features['diagnostic_purpose'] = 1
+    else:
+       features['diagnostic_purpose'] = 0
+    if prevention_purpose:
+       features['prevention_purpose'] = 1
+    else: 
+       features['prevention_purpose'] = 0
 
     if treatment_purpose:
         features['treatment_purpose'] = 1
@@ -163,6 +199,7 @@ with st.form('Features'):
                                  label_visibility='collapsed', placeholder='Type a number...')
     if num_groups is None or num_groups == 0:
         st.error('Your trial must have at least 1 group.')
+    features['number_of_groups'] = num_groups
     features['number_of_groups'] = num_groups
 
     # Outcome measures
@@ -225,5 +262,14 @@ with st.form('Features'):
         if len(features) < 18:
             st.error('Please answer all questions.')
         else:
+          # st.write(features)
+          response = requests.post('http://backend:8000/predict', json=features)
+
+          if response.status_code == 200:
+            prediction = response.json()
+            st.session_state['prediction_result'] = prediction
+            st.session_state['submitted'] = True
+            # st.experimental_rerun()  # Navigate to the results page
             st.switch_page('pages/loading.py')
-        
+          else:
+            st.error('Prediction failed. Please try again.')
