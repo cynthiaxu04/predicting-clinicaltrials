@@ -14,7 +14,7 @@ Once the images are built, run the application with the commmand:
 ```
 docker-compose up
 ```
-And enter the provided localhost URL into your web browser of choice, e.g.
+And enter the provided localhost URL into your web browser (Google Chrome preferred), e.g.
 ```
 http://localhost:8501
 ```
