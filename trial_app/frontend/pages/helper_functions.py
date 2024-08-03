@@ -1,65 +1,7 @@
-def conditions_map(condition):
-  if 'cell lung' in condition:
-    return 'squamous cell'
-  if 'head and neck' in condition:
-    return 'squamous cell'
-  if 'squamous cell' in condition:
-    return 'squamous cell'
-  if 'small cell' in condition:
-    return 'squamous cell'
-  if 'lung' in condition:
-    return 'squamous cell'
-  if 'keratosis' in condition:
-    return 'squamous cell'
-  if 'myeloma' in condition:
-    return 'myeloma'
-  if 'sarcoma' in condition:
-    return 'sarcoma'
-  if 'lymphoma' in condition:
-    return 'lymphoma'
-  if 'brain cancer' in condition:
-    return 'brain'
-  if 'melanoma' in condition:
-    return 'melanoma'
-  if 'adenocarcinoma' in condition:
-    return 'adeno'
-  if 'prostate cancer' in condition:
-    return 'adeno'
-  if 'breast' in condition:
-    return 'ductal'
-  if 'leukemia' in condition:
-    return 'leukemia'
-  if 'colorectal' in condition:
-    return 'adeno'
-  if 'glioblastoma' in condition:
-    return 'brain'
-  if 'kidney' in condition:
-    return 'adeno'
-  if 'renal' in condition:
-    return 'adeno'
-  if 'hematopoietic' in condition:
-    return 'leukemia'
-  if 'lymphoid' in condition:
-    return 'lymphoma'
-  if 'cervix' in condition:
-    return 'adeno'
-  if 'cervical' in condition:
-    return 'adeno'
-  if 'liver' in condition:
-    return 'adeno'
-  if 'hepatic' in condition:
-    return 'adeno'
-  if 'hepatocellular' in condition:
-    return 'adeno'
-  if 'nsclc' in condition:
-    return 'squamous cell'
-  if 'thyroid' in condition:
-    return 'adeno'
-  if 'pain' in condition:
-    return 'pain'
-  elif 'carcinoma' in condition:
-    return 'carcinoma'
-  return 'other'
+shortcut_map = {'Adenocarcinoma':'adeno', 'Squamous Cell Carcinoma':'squamous cell', 'Transitional Cell Carcinoma': 'carcinoma',
+                 'Basal Cell Carcinoma': 'carcinoma', 'Ductal Carcinoma': 'ductal', 'Other Carcinoma': 'carcinoma',
+                 'Brain Cancer': 'brain', 'Sarcoma': 'sarcoma', 'Lymphoma': 'lymphoma', 'Leukemia': 'leukemia', 'Melanoma':'melanoma',
+                  'Myeloma': 'myeloma', 'Pediatric Cancer': 'other', 'Pain relating to any disease': 'pain', 'Other': 'other'}
 
 conditions_5yr_survival_map = {'myeloma': 0.598, 'squamous cell': 0.99, 
                                 'adeno': 0.175, 'carcinoma': 0.99, 'leukemia': 0.65, 
