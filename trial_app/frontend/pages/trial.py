@@ -1,40 +1,33 @@
 import streamlit as st
 import requests
-import pandas as pd
-from pages.helper_functions import shortcut_map, conditions_5yr_survival_map, conditions_max_treatment_duration_map, conditions_min_treatment_duration_map
 
 st.header('Estimate your trial duration')
 st.write('Below are a few questions to help us better understand your trial. Your responses will be used to generate the predicted duration.')
 
 features = dict()
-display_features = dict()
 with st.form('Features'):
 
     # Cancer type
     st.write('1. What is the category of disease(s) your trial is researching?')
-    type = st.selectbox('category of disease', 
+    type = st.selectbox('Category of disease', 
                         ('Adenocarcinoma', 'Squamous Cell Carcinoma', 'Transitional Cell Carcinoma', 'Basal Cell Carcinoma',
                         'Ductal Carcinoma', 'Other Carcinoma', 'Brain Cancer', 'Sarcoma', 'Lymphoma', 'Leukemia', 'Melanoma',
                         'Myeloma', 'Pediatric Cancer', 'Pain relating to any disease', 'Other'), index=None, label_visibility='collapsed')
     
-    display_features['Cancer type'] = type
-    type = shortcut_map.get(type)
-    features['survival_5yr_relative'] = conditions_5yr_survival_map.get(type)
-    features['max_treatment_duration'] = conditions_max_treatment_duration_map.get(type)
-    features['min_treatment_duration'] = conditions_min_treatment_duration_map.get(type)
+    features['survival_5yr_relative'] = 0.175
+    features['number_of_conditions'] = 1
+    features['max_treatment_duration'] = 1080
+    features['min_treatment_duration'] = 360
 
     # Phase
     st.write('2. What is the phase of your trial?')
     phase = st.radio('phase', [2, 3], index=None, label_visibility='collapsed')
-    display_features['Phase'] = phase
     if phase == 2:
        features['phase_PHASE2_PHASE3'] = 1
-       features['phase_PHASE3'] = 1
     else:
        features['phase_PHASE2_PHASE3'] = 0
     if phase == 3:
        features['phase_PHASE3'] = 1
-       features['phase_PHASE2_PHASE3'] = 0
     else:
        features['phase_PHASE3'] = 0
 
@@ -45,22 +38,21 @@ with st.form('Features'):
     if num_sites == 0 or num_sites is None:
         st.error('Your trial must have at least 1 site.')
     st.write('')
-    display_features['Number of sites'] = num_sites
     features['num_locations'] = num_sites
-    
+
     # US vs Non US
     st.write('4. Where will your trial take place?')
     us = st.checkbox('Includes USA location(s)')
     non_us = st.checkbox('Includes non-USA location(s)')
     if us and non_us:
         features['location'] = 2
-        display_features['Location'] ='USA and non-USA'
+        display_location = 'USA and non-USA'
     elif us:
         features['location'] = 0
-        display_features['Location'] ='USA'
+        display_location = 'USA'
     elif non_us:
         features['location'] = 1
-        display_features['Location'] = 'non-USA'
+        display_location = 'non-USA'
     st.write('')
 
     # Patients
@@ -69,7 +61,7 @@ with st.form('Features'):
                                    label_visibility='collapsed', placeholder='Type a number...')
     if num_patients is None or num_patients == 0:
         st.error('Your trial must have at least 1 subject.')
-    display_features['Number of subjects'] = num_patients
+    st.write('')
     features['enroll_count'] = num_patients
 
     # Criteria
@@ -78,7 +70,6 @@ with st.form('Features'):
                                     label_visibility='collapsed', placeholder='Type a number...')
     if num_inclusion is None or num_inclusion == 0:
         st.error('Your trial must have at least 1 inclusion criteria.')
-    display_features['Number of inclusion criteria'] = num_inclusion
     features['num_inclusion'] = num_inclusion
     st.write('')
 
@@ -87,13 +78,13 @@ with st.form('Features'):
                                     label_visibility='collapsed', placeholder='Type a number...')
     if num_exclusion is None or num_exclusion == 0:
         st.error('Your trial must have at least 1 exclusion criteria.')
-    display_features['Number of exclusion criteria'] = num_exclusion
     features['num_exclusion'] = num_exclusion
+    st.write('')
 
     # DMC
     st.write('8. Will you have a data monitoring committee?')
     has_dmc = st.radio('data monitoring committee', ['Yes', 'No'], index=None, label_visibility='collapsed')
-    display_features['Data monitoring committee'] = has_dmc
+    display_dmc = has_dmc
     if has_dmc == 'Yes':
         features['has_dmc'] = 1
     elif has_dmc == 'No':
@@ -102,7 +93,7 @@ with st.form('Features'):
     # Responsible party
     st.write('9. Who will be the responsible party?')
     resp_party = st.radio('responsible party', ['PI', 'Sponsor', 'PI and Sponsor'], index=None, label_visibility='collapsed')
-    display_features['Responsible party'] = resp_party
+    display_resp_party = resp_party
     if resp_party == 'PI':
         features['resp_party'] = 0
     elif resp_party == 'Sponsor':
@@ -113,7 +104,7 @@ with st.form('Features'):
     # Intervention model
     st.write('10. What is the intervention model for your trial?')
     intervention = st.radio('Intervention model', ['Single Group', 'Parallel', 'Other'], index=None, label_visibility='collapsed')
-    display_features['Intervention model'] = intervention
+    display_intervention = intervention
     if intervention == 'Single Group':
         features['intervention_model'] = 0
     elif intervention == 'Parallel':
@@ -126,8 +117,7 @@ with st.form('Features'):
     intervention_type = st.multiselect(
         'Intervention Types',
         ['Procedure', 'Device', 'Behavioral', 'Drug', 'Radiation', 'Biological'], label_visibility='collapsed')
-    intervention_str = ', '.join(intervention_type)
-    display_features['Intervention type(s)'] = intervention_str
+    display_intervention_types = ', '.join(intervention_type)
     count = 0
     if 'Procedure' in intervention_type:
         count +=1
@@ -142,8 +132,6 @@ with st.form('Features'):
         features['drug_intervention'] = 0
     if 'Radiation' in intervention_type:
         count +=1
-    else:
-        features['radiation_intervention'] = 0
     if 'Biological' in intervention_type:
         features['biological_intervention'] = 1
         count +=1
@@ -153,11 +141,12 @@ with st.form('Features'):
     features['number_of_intervention_types'] = count
 
     # Primary purpose
-    st.write('12. What is the primary purpose(s) of your trial?')
+    st.write('12. What is the primary purpose of your trial?')
     treatment_purpose = st.checkbox('Treatment')
     diagnostic_purpose = st.checkbox('Diagnostic')
     prevention_purpose = st.checkbox('Prevention')
     supportive_purpose = st.checkbox('Supportive')
+
     purpose_list = []
     if treatment_purpose:
         features['treatment_purpose'] = 1
@@ -174,9 +163,8 @@ with st.form('Features'):
        purpose_list.append('Prevention')
     else: 
        features['prevention_purpose'] = 0
-    
-    purpose_str = ', '.join(purpose_list)
-    display_features['Primary purpose(s)'] = purpose_str
+
+    display_purpose = ', '.join(purpose_list)
 
     # Groups
     st.write('13. How many groups will your trial have?')
@@ -185,13 +173,11 @@ with st.form('Features'):
     if num_groups is None or num_groups == 0:
         st.error('Your trial must have at least 1 group.')
     features['number_of_groups'] = num_groups
-    display_features['Number of groups'] = num_groups
 
     # Outcome measures
     st.write('14. What are the outcome measures of your trial?')
     outcome_measures = st.multiselect('Outcome Measures', ['Overall Survival', 'Adverse Events', 'Duration of Response', 'Other'], label_visibility='collapsed')
-    om_str = ', '.join(outcome_measures)
-    display_features['Outcome measure(s)'] = om_str
+    display_outcome_measures = ', '.join(outcome_measures)
     if 'Overall Survival' in outcome_measures:
         features['os_outcome_measure'] = 1
     else:
@@ -208,7 +194,7 @@ with st.form('Features'):
     # Masking
     st.write('15. What is the masking for your trial?')
     mask = st.radio('Masking', ['Open', 'Single', 'Double', 'Triple', 'Quadruple'], index=None, label_visibility='collapsed')
-    display_features['Masking'] = mask
+
     if mask == 'Open':
         features['masking'] = 0
     elif mask == 'Single':
@@ -223,7 +209,6 @@ with st.form('Features'):
     # Healthy volunteers
     st.write('16. Will your trial include healthy volunteers?')
     vol = st.radio('Healthy volunteers', ['Yes', 'No'], index=None, label_visibility='collapsed')
-    display_features['Healthy volunteers'] = vol
     if vol == 'Yes':
         features['healthy_vol'] = 1
     else:
@@ -234,26 +219,23 @@ with st.form('Features'):
     primary_max = st.number_input('Primary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None,
                                   label_visibility='collapsed', placeholder='Type a number...')
     unit = st.radio('Unit', ['Days', 'Months', 'Years'], index=None)
-    duration = str(primary_max) + ' ' + str(unit)
     if unit == 'Days':
         features['primary_max_days'] = primary_max
     elif unit == 'Months':
         features['primary_max_days'] = primary_max * 30
     elif unit == 'Years':
         features['primary_max_days'] = primary_max * 365
-    display_features['Primary outcome measure duration (from baseline)'] = duration
-    
+    display_primary_duration = str(primary_max) + ' ' + str(unit)
+
     st.write('18. What is the maximum duration from baseline to the secondary outcome measure for one patient?')
     secondary_max = st.number_input('Secondary outcome measure duration', min_value = 0.0, max_value=10000.0, step=0.5, value=None,
                                     label_visibility='collapsed', placeholder='Type a number or leave blank if no secondary outcome measure...')
     unit_secondary = st.radio('Unit', ['Days', 'Months', 'Years', 'No secondary outcome measure'], key=2, index=None)
-    
     if secondary_max is None:
         features['secondary_max_days'] = None
-        display_features['Secondary outcome measure duration (from baseline)'] = 'None'
+        display_secondary_duration = 'None'
     else:
-        sec_duration = str(secondary_max) + ' ' + str(unit_secondary)
-        display_features['Secondary outcome measure duration (from baseline)'] = sec_duration 
+        display_secondary_duration = str(secondary_max) + ' ' + str(unit_secondary)
 
     if unit_secondary == 'Days':
         features['secondary_max_days'] = secondary_max
@@ -261,14 +243,14 @@ with st.form('Features'):
         features['secondary_max_days'] = secondary_max * 30
     elif unit_secondary == 'Years':
         features['secondary_max_days'] = secondary_max * 365  
-    
+
     # Submission
     submitted = st.form_submit_button('Submit')
     if submitted:
-        st.write(features)
-        if len(features) < 28:
+        if len(features) < 18:
             st.error('Please answer all questions.')
         else:
+          # st.write(features)
           response = requests.post('http://backend:8000/predict', json=features)
 
           if response.status_code == 200:
