@@ -6,7 +6,7 @@ FILES=(
     "$BASE_DIR/data/phase2_oncology_2011_api.json" 
     "$BASE_DIR/data/phase3_oncology_2011_api.csv")
 
-BINS=(2 3 4 5)
+BINS=(2 3)
 
 MODEL_ARGS=("rf" "xgb" "lgb")
 

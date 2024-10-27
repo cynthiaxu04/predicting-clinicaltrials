@@ -803,11 +803,11 @@ if __name__ == "__main__":
     train_df, test_df = train_test_split(encoded_df, test_size=0.3, random_state=42, shuffle=True)
 
     # save the data file
-    train_df.to_csv(os.path.join(root,"data", "cleaned_data_train.csv"), index=False)
-    test_df.to_csv(os.path.join(root, "data", "cleaned_data_test.csv"), index=False)
+    train_df.to_csv(os.path.join(root,"data", f"cleaned_data_{file[:6]}_{args.bins}bin_train.csv"), index=False)
+    test_df.to_csv(os.path.join(root, "data", f"cleaned_data_{file[:6]}_{args.bins}bin_test.csv"), index=False)
 
     # save the meta data, i.e. data file name and the number of bins
-    meta_dict = {"data_file": file, "num_bins": args.bins, "bins": bins_dict}
+    meta_dict = {"data_file": file, "phase": file[:6], "num_bins": args.bins, "bins": bins_dict}
     save_dict_to_json(os.path.join(root,"data","metadata.json"), meta_dict)
 
 data_msg = "Data processing completed."
