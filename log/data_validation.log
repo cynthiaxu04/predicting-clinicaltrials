@@ -551,3 +551,77 @@
 2024-10-27 16:05:05,662 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 1413.0, closed='right'), 1: Interval(1413.0, 4722.0, closed='right')}
 2024-10-27 16:05:06,923 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 686
 2024-10-27 16:05:06,969 - Data processing completed.
+2024-11-13 12:35:42,501 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:38:30,042 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:38:30,555 - CSV file columns match the YAML schema.
+2024-11-13 12:38:30,730 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:38:30,734 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:41:15,132 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:41:15,607 - CSV file columns match the YAML schema.
+2024-11-13 12:41:15,756 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:41:15,758 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:42:50,883 - Data processing completed.
+2024-11-13 12:43:58,029 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:43:58,483 - CSV file columns match the YAML schema.
+2024-11-13 12:43:58,642 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:43:58,643 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:45:32,972 - Data file being processed: phase1_lungcancer.json
+2024-11-13 12:45:33,384 - CSV file columns match the YAML schema.
+2024-11-13 12:45:33,528 - 25 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:45:33,531 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:46:56,519 - Data processing completed.
+2024-11-13 12:47:27,850 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:47:28,311 - CSV file columns match the YAML schema.
+2024-11-13 12:47:28,464 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:47:28,465 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:48:21,998 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:48:22,444 - CSV file columns match the YAML schema.
+2024-11-13 12:48:22,603 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:48:22,606 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:49:56,860 - Data file being processed: phase1_lungcancer.json
+2024-11-13 12:49:57,254 - CSV file columns match the YAML schema.
+2024-11-13 12:49:57,406 - 25 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:49:57,410 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:51:23,298 - Data processing completed.
+2024-11-13 12:53:24,728 - Data file being processed: phase1_lymphoma.json
+2024-11-13 12:53:25,206 - CSV file columns match the YAML schema.
+2024-11-13 12:53:25,366 - 48 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:53:25,369 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:54:56,921 - Data file being processed: phase1_lungcancer.json
+2024-11-13 12:54:57,323 - CSV file columns match the YAML schema.
+2024-11-13 12:54:57,473 - 25 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 12:54:57,476 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 12:56:19,799 - Data processing completed.
+2024-11-13 13:03:52,155 - Data file being processed: phase1_oncology_2011_api.json
+2024-11-13 13:04:11,100 - Data file being processed: phase1_oncology_2011_api.json
+2024-11-13 13:04:14,079 - CSV file columns match the YAML schema.
+2024-11-13 13:04:14,780 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:05:08,665 - Data file being processed: phase1_oncology_2011_api.json
+2024-11-13 13:05:08,666 - Number of bins: 2
+2024-11-13 13:05:11,618 - CSV file columns match the YAML schema.
+2024-11-13 13:05:12,322 - 33 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:05:12,330 - Bin labels and their corresponding intervals are: {0: Interval(-0.001, 1232.0, closed='right'), 1: Interval(1232.0, 4453.0, closed='right')}
+2024-11-13 13:05:13,571 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 486
+2024-11-13 13:05:13,682 - Data processing completed.
+2024-11-13 13:05:42,442 - Data file being processed: phase1_lymphoma.json
+2024-11-13 13:05:42,442 - Number of bins: 2
+2024-11-13 13:05:42,920 - CSV file columns match the YAML schema.
+2024-11-13 13:05:43,070 - 79 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:05:43,073 - Bin labels and their corresponding intervals are: {0: Interval(29.999, 1553.0, closed='right'), 1: Interval(1553.0, 8888.0, closed='right')}
+2024-11-13 13:05:43,295 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 81
+2024-11-13 13:05:43,307 - Data file being processed: phase1_lungcancer.json
+2024-11-13 13:05:43,307 - Number of bins: 2
+2024-11-13 13:05:43,673 - CSV file columns match the YAML schema.
+2024-11-13 13:05:43,807 - 46 rows were dropped due to missing values in one of: ['primary_study_duration_days', 'study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:05:43,809 - Bin labels and their corresponding intervals are: {0: Interval(30.999, 1369.5, closed='right'), 1: Interval(1369.5, 6209.0, closed='right')}
+2024-11-13 13:05:44,023 - The number of dropped due to outliers (greater than 5 stdevs from the mean) is 123
+2024-11-13 13:05:44,057 - Data processing completed.
+2024-11-13 13:11:42,599 - Data file being processed: phase1_oncology_2011_api.json
+2024-11-13 13:11:45,350 - CSV file columns match the YAML schema.
+2024-11-13 13:11:46,058 - 33 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:11:46,062 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 13:20:16,221 - Data file being processed: phase1_oncology_2011_api.json
+2024-11-13 13:20:19,269 - CSV file columns match the YAML schema.
+2024-11-13 13:20:19,964 - 33 rows were dropped due to missing values in one of: ['study_duration_days', 'protocolSection_designModule_enrollmentInfo_count']
+2024-11-13 13:20:19,971 - Bin labels and their corresponding intervals are: {-1: nan, 0: 'Low', 1: 'High'}
+2024-11-13 13:24:25,645 - Data processing completed.

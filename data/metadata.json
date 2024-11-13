@@ -1,9 +1,10 @@
 {
-    "data_file": "phase2_oncology_2011_api.json",
-    "phase": "phase2",
+    "data_file": "phase1_oncology_2011_api.json",
+    "phase": "phase1",
     "num_bins": 2,
     "bins": {
-        "0": "(-0.001, 1413.0]",
-        "1": "(1413.0, 4722.0]"
+        "-1": NaN,
+        "0": "Low",
+        "1": "High"
     }
 }
