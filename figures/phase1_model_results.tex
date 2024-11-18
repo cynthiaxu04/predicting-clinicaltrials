@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Modeling results comparing the Long, et al. model and our model, ClinicalAI. Our recreation of the Long, et al. model gave a baseline k-fold mean accuracy of 0.682 on Phase 1 lymphoma trial data. Our ClinicalAI model was either as good as or outperformed the Long model whether on lymphoma only or general oncology trial data.}
+\label{tab:model_performance}
+\begin{tabular}{llllrlrr}
+\toprule
+Model & Trial Phase & Trial Cancer Type & Model Type & Accuracy & K-fold Mean Accuracy & Precision & Mean Absolute Error \\
+\midrule
+Long, et al. & Phase 1 & Lymphoma & RandomForest & 0.675 & 0.682 ± 0.0238 & 0.670 & 0.326 \\
+Long, et al. & Phase 1 & Oncology & RandomForest & 0.718 & 0.697 ± 0.0123 & 0.715 & 0.283 \\
+ClinicalAI & Phase 1 & Lymphoma & RandomForest & 0.660 & 0.736 ± 0.0099 & 0.661 & 0.340 \\
+ClinicalAI & Phase 1 & Oncology & RandomForest & 0.748 & 0.728 ± 0.0131 & 0.748 & 0.252 \\
+\bottomrule
+\end{tabular}
+\end{table}
