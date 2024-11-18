@@ -1,0 +1,20 @@
+\begin{table}
+\caption{Importance of ClinicalAI model features ranked by RF's built-in Gini importance. Of the top 10 most important features, 5 of them are unique to ClinicalAI from the Long, et al. model: number of inclusion and exclusion criteria, time to measure primary and secondary outcomes, and relative 5 year surival rate by cancer type.}
+\label{tab:feature_importance}
+\begin{tabular}{llr}
+\toprule
+ClinicalAI Feature & Description & Importance \\
+\midrule
+Number of study participants & Number of participants enrolled in the study & 0.176600 \\
+Time to measure secondary outcomes & Maximum timeframe to measure trial's secondary outcomes in days & 0.114700 \\
+Time to measure primary outcomes & Maximum timeframe to measure trial's primary outcomes in days & 0.099300 \\
+Number of inclusion criteria & Number of inclusion criteria for study participants & 0.088700 \\
+Number of study locations & Number of locations or sites where the study takes place & 0.066400 \\
+Number of exclusion criteria & Number of exclusion criteria for study participants & 0.063500 \\
+Type of sponsor & Sponsor of the study, e.g. industry, academia, etc. & 0.061000 \\
+Location of study & Location of study, e.g. in the USA only, not in the USA, or both in and outside of the USA & 0.041200 \\
+Number of intervention types & Number of unique intervention types, e.g. drug, device, procedure, etc. & 0.040100 \\
+Relative 5 year survival rate & Relative 5 year survival rate for cancer types, e.g. myeloma, squamous cell, carcinoma, etc. & 0.036600 \\
+\bottomrule
+\end{tabular}
+\end{table}

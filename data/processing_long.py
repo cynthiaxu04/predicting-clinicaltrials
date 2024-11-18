@@ -7,9 +7,11 @@ import argparse
 import yaml
 import logging
 from sklearn.model_selection import train_test_split
-from sklearn.cluster import KMeans
+# from sklearn.cluster import KMeans
 import json
 import spacy
+from sklearn.preprocessing import LabelEncoder
+
 
 
 
@@ -517,6 +519,8 @@ def process_data(file):
     df['study_eq_bins'] = pd.cut(df['study_duration_days'], bins=[df['study_duration_days'].min(), avg_dur, df['study_duration_days'].max()], labels=['Low', 'High'], right=False)
 
     df['study_eq_labels'] = df['study_eq_bins'].cat.codes
+    le = LabelEncoder()
+    df['study_eq_labels'] = le.fit_transform(df['study_eq_labels'])
 
     bins_dict = df.groupby('study_eq_labels')['study_eq_bins'].apply(lambda x: x.unique()[0]).to_dict()
     msg2 = f"Bin labels and their corresponding intervals are: {bins_dict}"
@@ -709,7 +713,12 @@ def process_data(file):
     categorical_columns = clean_df.select_dtypes(include=['object']).columns
 
     # Replace NaN with "missing" in categorical columns
-    clean_df[categorical_columns] = clean_df[categorical_columns].fillna('missing')
+    clean_df[categorical_columns] = clean_df[categorical_columns].fillna(-1)
+    clean_df[categorical_columns] = clean_df[categorical_columns].astype(int)
+
+    # convert boolean columns to int
+    bool_columns = clean_df.select_dtypes(include=['bool']).columns
+    clean_df[bool_columns] = clean_df[bool_columns].astype(int)
 
     # impute the mean for missing enrollment count
     clean_df['enroll_count'] = clean_df['enroll_count'].fillna(clean_df["enroll_count"].mean())

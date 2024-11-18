@@ -1,0 +1,24 @@
+\begin{table}
+\caption{Modeling results comparing the Long, et al. model and our model, ClinicalAI. Our recreation of the Long, et al. model gave a baseline k-fold mean accuracy of 0.682 on Phase 1 lymphoma trial data. Our ClinicalAI model was either as good as or outperformed the Long model whether on lymphoma only or general oncology trial data. Further, ClinicalAI is able to maintain model performance when expanded to Phase 2 and Phase 3 oncology trials.}
+\label{tab:model_performance}
+\begin{tabular}{llllrlrr}
+\toprule
+Model & Trial Phase & Trial Cancer Type & Model Type & Accuracy & K-fold Mean Accuracy & Precision & Mean Absolute Error \\
+\midrule
+Long, et al. & Phase 1 & Lymphoma & RandomForest & 0.675000 & 0.682 ± 0.0238 & 0.670000 & 0.326000 \\
+Long, et al. & Phase 1 & Oncology & RandomForest & 0.718000 & 0.697 ± 0.0123 & 0.715000 & 0.283000 \\
+ClinicalAI & Phase 1 & Lymphoma & RandomForest & 0.660000 & 0.736 ± 0.0099 & 0.661000 & 0.340000 \\
+ClinicalAI & Phase 1 & Lymphoma & XGBoost & 0.666000 & 0.727 ± 0.0296 & 0.667000 & 0.334000 \\
+ClinicalAI & Phase 1 & Lymphoma & LightGBM & 0.685000 & 0.734 ± 0.0275 & 0.687000 & 0.315000 \\
+ClinicalAI & Phase 1 & Oncology & RandomForest & 0.748000 & 0.728 ± 0.0131 & 0.748000 & 0.252000 \\
+ClinicalAI & Phase 1 & Oncology & XGBoost & 0.749000 & 0.708 ± 0.0075 & 0.749000 & 0.251000 \\
+ClinicalAI & Phase 1 & Oncology & LightGBM & 0.741000 & 0.733 ± 0.0097 & 0.741000 & 0.259000 \\
+ClinicalAI & Phase 2 & Oncology & RandomForest & 0.720000 & 0.709 ± 0.0155 & 0.720000 & 0.280000 \\
+ClinicalAI & Phase 2 & Oncology & XGBoost & 0.729000 & 0.695 ± 0.0216 & 0.729000 & 0.271000 \\
+ClinicalAI & Phase 2 & Oncology & LightGBM & 0.720000 & 0.711 ± 0.012 & 0.720000 & 0.280000 \\
+ClinicalAI & Phase 3 & Oncology & RandomForest & 0.731000 & 0.766 ± 0.0236 & 0.732000 & 0.269000 \\
+ClinicalAI & Phase 3 & Oncology & XGBoost & 0.750000 & 0.742 ± 0.0246 & 0.750000 & 0.250000 \\
+ClinicalAI & Phase 3 & Oncology & LightGBM & 0.748000 & 0.738 ± 0.011 & 0.748000 & 0.252000 \\
+\bottomrule
+\end{tabular}
+\end{table}
