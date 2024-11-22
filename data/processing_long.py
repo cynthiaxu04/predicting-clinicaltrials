@@ -516,7 +516,10 @@ def process_data(file):
 
     # make bins with average duration
     avg_dur = np.mean(df['study_duration_days'])
-    df['study_eq_bins'] = pd.cut(df['study_duration_days'], bins=[df['study_duration_days'].min(), avg_dur, df['study_duration_days'].max()], labels=['Low', 'High'], right=False)
+    df['study_eq_bins'] = pd.cut(df['study_duration_days'], 
+                                 bins=[df['study_duration_days'].min() - 1, avg_dur, df['study_duration_days'].max() + 1], 
+                                 labels=['Low', 'High'], 
+                                 right=True)
 
     df['study_eq_labels'] = df['study_eq_bins'].cat.codes
     le = LabelEncoder()

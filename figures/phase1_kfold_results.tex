@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Modeling results comparing the Long, et al. model and our model, ClinicalAI, with 5-fold cross valiation.}
+\label{tab:model_performance}
+\begin{tabular}{lllllllll}
+\toprule
+Model & Model Type & Phase & Trial Cancer Type & Accuracy & Precision & Recall & F1 Score & ROC AUC \\
+\midrule
+Long & RandomForest & Phase 1 & Lymphoma & 0.6930 ± 0.0198 & 0.6671 ± 0.0300 & 0.4931 ± 0.0762 & 0.5632 ± 0.0534 & 0.7226 ± 0.0193 \\
+Long & RandomForest & Phase 1 & Oncology & 0.7046 ± 0.0161 & 0.6978 ± 0.0306 & 0.6104 ± 0.0160 & 0.6507 ± 0.0141 & 0.7731 ± 0.0150 \\
+ClinicalAI & RandomForest & Phase 1 & Lymphoma & 0.7287 ± 0.0130 & 0.7322 ± 0.0268 & 0.7095 ± 0.0568 & 0.7186 ± 0.0221 & 0.8115 ± 0.0198 \\
+ClinicalAI & RandomForest & Phase 1 & Oncology & 0.7352 ± 0.0106 & 0.7324 ± 0.0084 & 0.7497 ± 0.0174 & 0.7409 ± 0.0117 & 0.8159 ± 0.0080 \\
+\bottomrule
+\end{tabular}
+\end{table}
