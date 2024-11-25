@@ -9,6 +9,7 @@ import logging
 from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
 import json
+from sklearn.preprocessing import LabelEncoder
 
 
 #########################################################################################################################
@@ -242,53 +243,6 @@ def find_max_duration(durations):
     max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
     return max_days
 
-'''def extract_timeframes(outcomes):
-    # Check if 'outcomes' is iterable (i.e., a list in this context)
-    if isinstance(outcomes, list):
-        return [item.get('timeFrame', 'No description available') for item in outcomes]
-    else:
-        return ['No description available']  # Return a list with a default message if not iterable
-
-def extract_time_length_from_list(timeFrames):
-    # Function to extract time length from a single timeframe string
-    def extract_time_length(timeFrame):
-        # Regular expression to find numbers followed by time units
-        time_pattern = re.compile(r"(\d+)\s*(hours?|days?|weeks?|months?|years?)", re.IGNORECASE)
-        results = time_pattern.findall(timeFrame)
-
-        # Convert the extracted time durations to a more structured format
-        time_durations = []
-        for amount, unit in results:
-            time_durations.append((int(amount), unit.lower()))
-        return time_durations  # Make sure this return statement is aligned with the for-loop, not inside it
-
-    # Apply the extract_time_length function to each item in the list and combine results
-    combined_durations = []
-    for timeFrame in timeFrames:
-        if timeFrame:  # This checks if the timeFrame is not empty or None
-            combined_durations.extend(extract_time_length(timeFrame))
-    return combined_durations
-
-def convert_to_days(amount, unit):
-    if unit == 'hours':
-        return np.ceil(amount / 24)
-    elif unit == 'weeks':
-        return amount * 7
-    elif unit == 'months':
-        return amount * 30  # Simplified conversion, assuming each month has 30 days
-    elif unit == 'years':
-        return amount * 365  # Simplified conversion, assuming each year has 365 days
-    elif unit == 'days':
-        return amount
-    else:
-        return 0
-
-def find_max_duration(durations):
-    if not durations:  # Check if the list is empty
-        return np.nan # Use numpy Nan into indicate no data
-    max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
-    return max_days'''
-
 # Function to remove specified characters
 def remove_special_chars(col):
     return col.replace("[", "").replace("]", "").replace("'", "").replace(", ", "_")
@@ -463,6 +417,15 @@ def process_data(file, args):
     # make bins with k means clustering
     # Desired number of intervals
     n_intervals = args.bins
+
+    # avg_dur = np.mean(df['study_duration_days'])
+    # df['study_eq_bins'] = pd.cut(df['study_duration_days'], 
+    #                              bins=[df['study_duration_days'].min() - 1, avg_dur, df['study_duration_days'].max() + 1], 
+    #                              labels=['Low', 'High'], 
+    #                              right=True)
+    # df['study_eq_labels'] = df['study_eq_bins'].cat.codes
+    # le = LabelEncoder()
+    # df['study_eq_labels'] = le.fit_transform(df['study_eq_labels'])
 
     df['study_eq_bins'] = pd.qcut(df['study_duration_days'], q=n_intervals)
     df['primary_eq_bins'] = pd.qcut(df['primary_study_duration_days'], q=n_intervals)
