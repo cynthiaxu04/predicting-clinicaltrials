@@ -43,7 +43,7 @@ def get_parser():
 
     return parser.parse_args()
 
-def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:bool, prod:bool):
+def train_model(type:str, X_train, y_train, X_test, y_test, root, phase, bins, save_model:bool, prod:bool):
     """Train a model and save it.
 
     Args:
@@ -100,6 +100,7 @@ def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:boo
     # return model results
     row = {
         'model': type,
+        'phase': phase,
         'accuracy': acc,
         'mean_accuracy_kfold': cv_results.mean(),
         'precision': pre,
@@ -109,7 +110,7 @@ def train_model(type:str, X_train, y_train, X_test, y_test, root, save_model:boo
     }
 
     if save_model==True:
-        with open(os.path.join(root, "model", f'model_{type}.pkl'), 'wb') as file:
+        with open(os.path.join(root, "model", f'model_{type}_{phase}_{bins}bin.pkl'), 'wb') as file:
             pickle.dump(model, file)
 
     if prod==True:
@@ -161,13 +162,18 @@ if __name__ == "__main__":
     current = os.path.dirname(os.path.abspath(__file__))
     root = os.path.dirname(current)
     path = 'data'
-    filename = 'cleaned_data_train.csv'
+    # filename = 'cleaned_data_train.csv'
     meta_file = 'metadata.json'
 
     # path to metadata.json contains info on bins and data source
     metadata_path = os.path.join(root, path, meta_file)
-    
-    file = os.path.join(root,path,filename)
+
+    with open(metadata_path, 'r') as file:
+        data = json.load(file)
+    bins = data.get('num_bins')
+    phase = data.get('phase')
+
+    file = os.path.join(root,path,f"cleaned_data_{phase}_{bins}bin_train.csv")
 
     # do some data file validation
     if os.path.isfile(file):
@@ -176,8 +182,10 @@ if __name__ == "__main__":
         raise OSError("File does not exist.")
     
     logger.info(f"Train data file is: {file}")
+    
     # get command line arguments
     args = get_parser()
+    
     # validate the data csv file
     csv_file(file)
 
@@ -222,7 +230,7 @@ if __name__ == "__main__":
 
     # train and save a model
     results = train_model(type=args.model, X_train=X_train, y_train=y_train,
-                          X_test=X_test, y_test=y_test, save_model=True, root=root, prod=args.prod)
+                          X_test=X_test, y_test=y_test, phase=phase, bins=bins, save_model=True, root=root, prod=args.prod)
     print(f"Model results: {results}")
 
     # # save a copy of the model's metadata in the trial_app folder too

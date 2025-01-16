@@ -9,6 +9,7 @@ import logging
 from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
 import json
+from sklearn.preprocessing import LabelEncoder
 
 
 #########################################################################################################################
@@ -50,6 +51,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description='Validate CSV file columns using a YAML schema.')
 
     # parser.add_argument('yaml_file', type=yaml_file, help='Path to the YAML schema file')
+    parser.add_argument('--opt_file', type=str, help='Path to an additional CSV or JSON file')
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--csv_file', type=csv_file, help='Path to the CSV file')
@@ -241,53 +243,6 @@ def find_max_duration(durations):
     max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
     return max_days
 
-'''def extract_timeframes(outcomes):
-    # Check if 'outcomes' is iterable (i.e., a list in this context)
-    if isinstance(outcomes, list):
-        return [item.get('timeFrame', 'No description available') for item in outcomes]
-    else:
-        return ['No description available']  # Return a list with a default message if not iterable
-
-def extract_time_length_from_list(timeFrames):
-    # Function to extract time length from a single timeframe string
-    def extract_time_length(timeFrame):
-        # Regular expression to find numbers followed by time units
-        time_pattern = re.compile(r"(\d+)\s*(hours?|days?|weeks?|months?|years?)", re.IGNORECASE)
-        results = time_pattern.findall(timeFrame)
-
-        # Convert the extracted time durations to a more structured format
-        time_durations = []
-        for amount, unit in results:
-            time_durations.append((int(amount), unit.lower()))
-        return time_durations  # Make sure this return statement is aligned with the for-loop, not inside it
-
-    # Apply the extract_time_length function to each item in the list and combine results
-    combined_durations = []
-    for timeFrame in timeFrames:
-        if timeFrame:  # This checks if the timeFrame is not empty or None
-            combined_durations.extend(extract_time_length(timeFrame))
-    return combined_durations
-
-def convert_to_days(amount, unit):
-    if unit == 'hours':
-        return np.ceil(amount / 24)
-    elif unit == 'weeks':
-        return amount * 7
-    elif unit == 'months':
-        return amount * 30  # Simplified conversion, assuming each month has 30 days
-    elif unit == 'years':
-        return amount * 365  # Simplified conversion, assuming each year has 365 days
-    elif unit == 'days':
-        return amount
-    else:
-        return 0
-
-def find_max_duration(durations):
-    if not durations:  # Check if the list is empty
-        return np.nan # Use numpy Nan into indicate no data
-    max_days = max(convert_to_days(amount, unit) for amount, unit in durations)
-    return max_days'''
-
 # Function to remove specified characters
 def remove_special_chars(col):
     return col.replace("[", "").replace("]", "").replace("'", "").replace(", ", "_")
@@ -418,19 +373,8 @@ def convert_dtypes(df):
     
     return df
 
-
-#########################################################################################################################
-# Code to do actual data processing
-if __name__ == "__main__":
-    # get command line arguments
-    args = get_parser()
-
-    if args.csv_file:
-        file = args.csv_file
-    elif args.json_file:
-        file = args.json_file
-
-    # validate the data file
+def process_data(file, args):
+   # validate the data file
     current = os.path.dirname(os.path.abspath(__file__))
     root = os.path.dirname(current)
     # print(root)
@@ -473,6 +417,15 @@ if __name__ == "__main__":
     # make bins with k means clustering
     # Desired number of intervals
     n_intervals = args.bins
+
+    # avg_dur = np.mean(df['study_duration_days'])
+    # df['study_eq_bins'] = pd.cut(df['study_duration_days'], 
+    #                              bins=[df['study_duration_days'].min() - 1, avg_dur, df['study_duration_days'].max() + 1], 
+    #                              labels=['Low', 'High'], 
+    #                              right=True)
+    # df['study_eq_labels'] = df['study_eq_bins'].cat.codes
+    # le = LabelEncoder()
+    # df['study_eq_labels'] = le.fit_transform(df['study_eq_labels'])
 
     df['study_eq_bins'] = pd.qcut(df['study_duration_days'], q=n_intervals)
     df['primary_eq_bins'] = pd.qcut(df['primary_study_duration_days'], q=n_intervals)
@@ -747,13 +700,9 @@ if __name__ == "__main__":
         'ae_outcome_measure',
         'primary_max_days',
         'secondary_max_days',
-        'max_treatment_duration',
-        'min_treatment_duration',
+        # 'max_treatment_duration',
+        # 'min_treatment_duration',
         'survival_5yr_relative',
-        # 'conditions_category_num'
-        # 'protocolSection_outcomesModule_primaryOutcomes',
-        # 'protocolSection_outcomesModule_secondaryOutcomes',
-        # 'protocolSection_eligibilityModule_eligibilityCriteria'
     ]
 
     clean_df = df[cols].copy()
@@ -798,17 +747,45 @@ if __name__ == "__main__":
 
     # Apply function to all column names
     encoded_df.columns = encoded_df.columns.map(remove_special_chars)
+    return encoded_df, root, bins_dict
 
-    # now split the data
-    train_df, test_df = train_test_split(encoded_df, test_size=0.3, random_state=42, shuffle=True)
+def main():
+   # get command line arguments
+    args = get_parser()
 
-    # save the data file
-    train_df.to_csv(os.path.join(root,"data", "cleaned_data_train.csv"), index=False)
-    test_df.to_csv(os.path.join(root, "data", "cleaned_data_test.csv"), index=False)
+    if args.csv_file:
+        file = args.csv_file
+    elif args.json_file:
+        file = args.json_file
 
-    # save the meta data, i.e. data file name and the number of bins
-    meta_dict = {"data_file": file, "num_bins": args.bins, "bins": bins_dict}
-    save_dict_to_json(os.path.join(root,"data","metadata.json"), meta_dict)
+    if not args.opt_file:
+        clean_data, root, bins_dict = process_data(file, args)
+        
+        # now split the data
+        train_df, test_df = train_test_split(clean_data, test_size=0.3, random_state=42, shuffle=True)
+
+        # save the data file
+        train_df.to_csv(os.path.join(root,"data", f"cleaned_data_{file[:6]}_{args.bins}bin_train.csv"), index=False)
+        test_df.to_csv(os.path.join(root, "data", f"cleaned_data_{file[:6]}_{args.bins}bin_test.csv"), index=False)
+
+        # save the meta data, i.e. data file name and the number of bins
+        meta_dict = {"data_file": file, "phase": file[:6], "num_bins": args.bins, "bins": bins_dict}
+        save_dict_to_json(os.path.join(root,"data","metadata.json"), meta_dict)
+    elif args.opt_file:
+        print(f"Processing additional file: {args.opt_file}")
+        clean_train_data, root, bins_dict = process_data(file, args)
+        clean_test_data, _, _ = process_data(args.opt_file, args)
+
+        clean_train_data.to_csv(os.path.join(root,"data", f"cleaned_data_{file[:12]}_{args.bins}bin_train.csv"), index=False)
+        clean_test_data.to_csv(os.path.join(root, "data", f"cleaned_data_{args.opt_file[:12]}_{args.bins}bin_test.csv"), index=False)
+        # save the meta data, i.e. data file name and the number of bins
+        meta_dict = {"data_file": file, "phase": file[:6], "num_bins": args.bins, "bins": bins_dict}
+        save_dict_to_json(os.path.join(root,"data","long_metadata.json"), meta_dict)
+   
+#########################################################################################################################
+# Code to do actual data processing
+if __name__ == "__main__":
+   main()
 
 data_msg = "Data processing completed."
 logger.info(data_msg)

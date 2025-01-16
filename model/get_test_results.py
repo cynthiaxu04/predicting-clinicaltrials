@@ -36,8 +36,8 @@ def get_parser():
 
     return parser.parse_args()
 
-def get_model_files(root, type:str):
-    model_file = os.path.join(root, "model", f"model_{type}.pkl")
+def get_model_files(root, phase, bins, type:str):
+    model_file = os.path.join(root, "model", f"model_{type}_{phase}_{bins}bin.pkl")
 
     if os.path.exists(model_file):
         with open(model_file, 'rb') as file:
@@ -86,10 +86,18 @@ if __name__ == "__main__":
     current = os.path.dirname(os.path.abspath(__file__))
     root = os.path.dirname(current)
     path = 'data'
-    filename = 'cleaned_data_test.csv'
+    # filename = 'cleaned_data_test.csv'
     meta_file = 'metadata.json'
     
-    file = os.path.join(root,path,filename)
+    # path to metadata.json contains info on bins and data source
+    metadata_path = os.path.join(root, path, meta_file)
+
+    with open(metadata_path, 'r') as file:
+        data = json.load(file)
+    bins = data.get('num_bins')
+    phase = data.get('phase')
+
+    file = os.path.join(root,path,f"cleaned_data_{phase}_{bins}bin_test.csv")
 
     # do some data file validation
     if os.path.isfile(file):
@@ -106,7 +114,7 @@ if __name__ == "__main__":
     # read in the data
     df = pd.read_csv(file)
 
-    model, cols_list = get_model_files(type=args.model, root=root)
+    model, cols_list = get_model_files(phase=phase, bins=bins, type=args.model, root=root)
 
     x_cols = cols_list
     y_cols = ['study_eq_labels']
@@ -123,12 +131,15 @@ if __name__ == "__main__":
 
     row = {
         'model': args.model,
+        'phase': phase,
         'accuracy': acc,
         'precision': pre,
         'r_squared': r2,
         'mean_squared_error': mse,
         'mean_absolute_error': mae
     }
+
+    print(f"Test results: {row}")
 
     json_path = os.path.join(root,path,meta_file)
     if not os.path.isfile(json_path):

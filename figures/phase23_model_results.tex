@@ -1,0 +1,16 @@
+\begin{table}
+\caption{Modeling results of our ClinicalAI model on Phase 2 and Phase 3 oncology trial data. Performance is largely maintained despite the increase in trial complexity.}
+\label{tab:model_performance}
+\begin{tabular}{llllrrrrr}
+\toprule
+Model & Model Type & Phase & Trial Cancer Type & Accuracy & Precision & Recall & F1 Score & ROC AUC \\
+\midrule
+ClinicalAI & RandomForest & Phase 2 & Oncology & 0.722 & 0.722 & 0.722 & 0.722 & 0.795 \\
+ClinicalAI & XGBoost & Phase 2 & Oncology & 0.729 & 0.729 & 0.729 & 0.729 & 0.802 \\
+ClinicalAI & LightGMB & Phase 2 & Oncology & 0.720 & 0.720 & 0.720 & 0.720 & 0.796 \\
+ClinicalAI & RandomForest & Phase 3 & Oncology & 0.745 & 0.746 & 0.745 & 0.745 & 0.824 \\
+ClinicalAI & XGBoost & Phase 3 & Oncology & 0.750 & 0.750 & 0.750 & 0.750 & 0.829 \\
+ClinicalAI & LightGBM & Phase 3 & Oncology & 0.748 & 0.749 & 0.748 & 0.747 & 0.831 \\
+\bottomrule
+\end{tabular}
+\end{table}

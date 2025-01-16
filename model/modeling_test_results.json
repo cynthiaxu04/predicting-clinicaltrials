@@ -1744,5 +1744,363 @@
             "1": "(1004.0, 1783.0]",
             "2": "(1783.0, 4722.0]"
         }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.6177884615384616,
+        "precision": 0.6122470797024492,
+        "r_squared": 0.11507293354943282,
+        "mean_squared_error": 0.5552884615384616,
+        "mean_absolute_error": 0.43990384615384615,
+        "data_file": "phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "accuracy": 0.7313323572474377,
+        "precision": 0.7314939816558891,
+        "r_squared": -0.07734031328102664,
+        "mean_squared_error": 0.2686676427525622,
+        "mean_absolute_error": 0.2686676427525622,
+        "data_file": "phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase1",
+        "accuracy": 0.7408491947291361,
+        "precision": 0.7408133840914449,
+        "r_squared": -0.03917839482693042,
+        "mean_squared_error": 0.2591508052708638,
+        "mean_absolute_error": 0.2591508052708638,
+        "data_file": "phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase1",
+        "accuracy": 0.7437774524158126,
+        "precision": 0.7436838958648505,
+        "r_squared": -0.027436266071823923,
+        "mean_squared_error": 0.2562225475841874,
+        "mean_absolute_error": 0.2562225475841874,
+        "data_file": "phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase1",
+        "accuracy": 0.7437774524158126,
+        "precision": 0.7436838958648505,
+        "r_squared": -0.027436266071823923,
+        "mean_squared_error": 0.2562225475841874,
+        "mean_absolute_error": 0.2562225475841874,
+        "data_file": "phase1_oncology_2011_api.json",
+        "num_bins": 2,
+        "bins": {
+            "0": "(-0.001, 1232.0]",
+            "1": "(1232.0, 4453.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7475961538461539,
+        "precision": 0.7484541896373502,
+        "r_squared": -0.010199125789217778,
+        "mean_squared_error": 0.25240384615384615,
+        "mean_absolute_error": 0.25240384615384615,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7408276278695127,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7283653846153846,
+        "precision": 0.7293683919516668,
+        "r_squared": -0.08716667823030089,
+        "mean_squared_error": 0.27163461538461536,
+        "mean_absolute_error": 0.27163461538461536,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7424485265527937,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7307692307692307,
+        "precision": 0.731166599543563,
+        "r_squared": -0.07754573417516553,
+        "mean_squared_error": 0.2692307692307692,
+        "mean_absolute_error": 0.2692307692307692,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7259615384615384,
+        "precision": 0.726546713606185,
+        "r_squared": -0.09678762228543647,
+        "mean_squared_error": 0.27403846153846156,
+        "mean_absolute_error": 0.27403846153846156,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "rf",
+        "phase": "phase3",
+        "accuracy": 0.7379807692307693,
+        "precision": 0.7383152329441391,
+        "r_squared": -0.04868290200975944,
+        "mean_squared_error": 0.2620192307692308,
+        "mean_absolute_error": 0.2620192307692308,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "xgb",
+        "phase": "phase3",
+        "accuracy": 0.7355769230769231,
+        "precision": 0.7364912412273059,
+        "r_squared": -0.058303846064894804,
+        "mean_squared_error": 0.2644230769230769,
+        "mean_absolute_error": 0.2644230769230769,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
+    },
+    {
+        "model": "lgb",
+        "phase": "phase3",
+        "accuracy": 0.7403846153846154,
+        "precision": 0.7420308150537517,
+        "r_squared": -0.03906195795462386,
+        "mean_squared_error": 0.25961538461538464,
+        "mean_absolute_error": 0.25961538461538464,
+        "data_file": "phase3_oncology_2011_api.csv",
+        "num_bins": 2,
+        "bins": {
+            "0": "(90.999, 1380.0]",
+            "1": "(1380.0, 4722.0]"
+        }
     }
 ]

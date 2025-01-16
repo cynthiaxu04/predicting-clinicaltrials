@@ -1,0 +1,9 @@
+{
+    "data_file": "phase1_lymphoma.json",
+    "phase": "phase1",
+    "num_bins": 2,
+    "bins": {
+        "0": "Low",
+        "1": "High"
+    }
+}

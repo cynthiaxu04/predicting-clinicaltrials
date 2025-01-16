@@ -1,9 +1,9 @@
 {
-    "data_file": "phase3_oncology_2011_api.csv",
-    "num_bins": 3,
+    "data_file": "phase1_oncology_2011_api.json",
+    "phase": "phase1",
+    "num_bins": 2,
     "bins": {
-        "0": "(90.999, 1004.0]",
-        "1": "(1004.0, 1783.0]",
-        "2": "(1783.0, 4722.0]"
+        "0": "(-0.001, 1232.0]",
+        "1": "(1232.0, 4453.0]"
     }
 }
