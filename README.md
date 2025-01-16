@@ -5,6 +5,8 @@ Clinical trials are pivotal for the development of medical, surgical, or behavio
 
 Our product targets Phase 3 oncology trials, a crucial phase in cancer drug development, to significantly enhance resource optimization and cost reduction. Taking in only initial protocol information to generate the predicted duration, our model will not only improve the accuracy of trial duration estimates but also support clinical research organizations in streamlining their operations and allocating resources more effectively.
 
+## Data & Approach
+
 ## MVP
 Our web API predicts a time interval based on information from the study protocol for Phase 3 oncology trials. Some examples of study information include:
 - number of enrolled participants
